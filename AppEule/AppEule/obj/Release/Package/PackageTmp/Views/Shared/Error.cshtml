@@ -1,0 +1,39 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.Title = "Fehler";
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Show404</title>
+    <style>
+        a, a:visited {
+            color: dodgerblue;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+            a:hover, a:active {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <center>
+        <div>
+            <img src="~/Content/images/logo_start.png" />
+        </div>
+        <div>
+            <h1>Sorry, ein unbekannter Fehler aufgetreten.</h1>
+            <p>@Model.Exception</p>
+
+            <a href="#" onclick="history.back()">
+                &laquo; Zurück gehen
+            </a>
+        </div>
+    </center>
+</body>
+</html>

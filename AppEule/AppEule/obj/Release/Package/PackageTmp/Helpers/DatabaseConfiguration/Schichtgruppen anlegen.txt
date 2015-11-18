@@ -1,0 +1,33 @@
+﻿-- laut Installationshandbuch vorgehen! --
+use EULE_ASP;
+GO
+INSERT INTO ShiftGroup VALUES
+                       ((SELECT Id
+                        FROM AspNetUsers
+                        WHERE Email = 'Mitarbeiter1_eMail'),
+                       (SELECT Id
+                        FROM AspNetUsers
+                        WHERE Email = 'Mitarbeiter2_eMail'));
+GO
+UPDATE AspNetUsers
+SET ShiftGroupID = (SELECT ShiftGroupID
+                    FROM ShiftGroup
+                    WHERE EmployeeID01 = (SELECT Id
+                                          FROM AspNetUsers
+                                          WHERE Email = 'Mitarbeiter1_eMail')
+                    OR EmployeeID02 = (SELECT Id
+                                       FROM AspNetUsers
+                                       WHERE Email = 'Mitarbeiter1_eMail'))
+WHERE Email = 'Mitarbeiter1_eMail'
+GO
+UPDATE AspNetUsers
+SET ShiftGroupID = (SELECT ShiftGroupID
+                    FROM ShiftGroup
+                    WHERE EmployeeID01 = (SELECT Id
+                                          FROM AspNetUsers
+                                          WHERE Email = 'Mitarbeiter2_eMail')
+                    OR EmployeeID02 = (SELECT Id
+                                       FROM AspNetUsers
+                                       WHERE Email = 'Mitarbeiter2_eMail'))
+WHERE Email = 'Mitarbeiter2_eMail'
+GO

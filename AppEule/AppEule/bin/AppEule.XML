@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AppEule</name>
+    </assembly>
+    <members>
+        <member name="T:GUIManagement.AccountController">
+            <summary>
+            The AccountController stays for all the actions connected with personal account management, e.g. Login and Registration
+            </summary>
+        </member>
+        <member name="T:AppEule.Controllers.BaseController">
+            <summary>
+            This controller is used only to override the OnException method. Is a parent-class for all the controllers 
+            </summary>
+        </member>
+        <member name="T:AppEule.Controllers.EmployeeController">
+            <summary>
+            Is used to show the list of all the employees and edit them.
+            </summary>
+        </member>
+        <member name="T:AppEule.Controllers.ManageController">
+            <summary>
+            The controller to manage the vacation requests and accounts
+            </summary>
+        </member>
+        <member name="T:AppEule.Controllers.PendingVacationRequestsController">
+            <summary>
+            The controller for the view PendingVacationRequests/Index.cshtml, available only for division manager (Bereichsleiter)
+            Shows all the vacation requests that are waiting for a permission from a division manager.
+            </summary>
+        </member>
+        <member name="M:AppEule.Controllers.PendingVacationRequestsController.Index">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AppEule.Controllers.PendingVacationRequestsController.Reject(System.UInt64)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AppEule.Controllers.PendingVacationRequestsController.GetPendingRequests">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AppEule.Controllers.PendingVacationRequestsController.GetAllPendingVacationRequestsOfDivision">
+            <summary>
+            Picks all vacation requests of division but vacation requests of division manager in either state "submitted", "agreed" or "rejected by deputy"
+            </summary>
+            <returns>ViewItem for Division Manger role with details about vacation request, shift partners and vacation entitlement of requester</returns>
+        </member>
+        <member name="T:AppEule.Controllers.SendMailerController">
+            <summary>
+            The controller for sending email notifications
+            </summary>
+        </member>
+        <member name="T:GUIManagement.VacationReplacementRequestsController">
+            <summary>
+            The controller to manage vacation replacement requests (Vertretungsanfrage), a use can see them and confirm or deny.
+            </summary>
+        </member>
+        <member name="T:GUIManagement.VacationRequestsController">
+            <summary>
+            The controller is responsible for managing the vacation requests (Urlaubsanträge).
+            Includes the actions like creating VR, showing the list of VRs, editing and deleting the ones.
+            </summary>
+        </member>
+        <member name="M:GUIManagement.VacationRequestsController.RemoveVacationPeriodOverlapNote(VacationManagement.VacationRequest)">
+            <summary>
+            Removes the TRUE-flag in all vacation requests of the shift partner, if the given vacation request is cancelled by its requester.
+            Use requester ID of vacation request to identity the shiftpartner and startdate and enddate to retrieve vacation requests of the deputy
+            </summary>
+            <param name="vacationRequest">use requesterID to find deputy, use time period to specify overlap time period </param>
+            <returns>TRUE if successful, else FALSE</returns>
+        </member>
+        <member name="M:CommunicationManagement.EmailService.sendMessage(VacationManagement.VacationRequest,System.String)">
+            <summary>
+            informs the respective persons about the new status
+            </summary>
+            <param name="VacationRequest">VacationRequest of the Requester</param>
+            <param name="message">Content of email</param>
+            <returns></returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectHolidays(VacationManagement.VacationRequest)">
+            <summary>
+            selects a number of all Holidays between the VacationRequest' StartDate and EndDate that are workdays and not a Saturday/Sunday 
+            </summary>
+            <param name="VacationRequest">VacationRequest of the Employee in the VacationRequest</param>
+            <returns>int number of selected Holidays</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectDeputy(VacationManagement.VacationRequest)">
+            <summary>
+            selects the Shiftpartner of the Employee in the VacationRequest
+            </summary>
+            <param name="VacationRequest">VacationRequest of the Employee</param>
+            <returns>string with ShiftpartnerID</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectEmployeeVacationRequestInTimePeriod(VacationManagement.VacationRequest,System.String)">
+            <summary>
+            selects all VacationTimePeriods of defined employeeID (VacationStartDates and VacationEndDates), 
+            e.g. shift partner's vacation time periods that are in the same time period like the requested VacationTimePeriod
+            sortiert nach Startdatum
+            </summary>
+            <param name="VacationRequest">VacationRequest of the Employee</param>
+            <param name="EmployeeID">EmployeeID of the specific Employee </param>
+            <returns>List with (empty/ one Tuple/ many Tuples) and VacationStartDate, VacationEndDate inside every Tuple</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectLockPeriods(VacationManagement.VacationRequest)">
+            <summary>
+            selects all LockPeriods with StartDate and EndDate within the VacationPeriod of VacationRequest
+            sortiert nach Startdatum
+            </summary>
+            <param name="VacationRequest">VacationRequest of the Employee</param>
+            <returns>List that contains (0/one/many) Tuples, every Tuple contains 2 DateTime (Start, End of LockPeriod)</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectRemainingVacationDays(System.String)">
+            <summary>
+            select remaining VacationDays for Employee, these are total days for this year + days of the previous year
+            </summary>
+            <param name="EmployeeID">EmployeeID</param>
+            <returns>number of remainingV acationDays</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.InsertNewVacationRequest(VacationManagement.VacationRequest)">
+            <summary>
+            inserts a new VacationRequest into the DB
+            </summary>
+            <param name="VacationRequest">VacationRequest of Employee</param>
+            <returns>true or false (successfull or not)</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectDivisionManager(System.String)">
+            <summary>
+            selects information of the DivisionManager for the given EmployeeID
+            </summary>
+            <param name="EmployeeID">EmployeeID of the logged-in Employee</param>
+            <returns>Employee Object filled with information(Id, Username, Passwordhash, Firstname, Lastname, Email, ShiftgroupID, DivisionID) about DivisionManager</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectDeputy(System.String)">
+            <summary>
+            select the information for the shiftpartner of logged-in Employee
+            </summary>
+            <param name="EmployeeID">EmployeeID of logged-in Employee</param>
+            <returns>object Employee with information about shiftpartner (id, username, passwordhash, firstname, lastname, email, shiftgroupid)</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectAllVacationRequestsOfEmployee(System.String)">
+            <summary>
+            selects all VacationRequests of the given EmployeeID
+            sortiert nach Startdatum
+            </summary>
+            <param name="EmployeeID">EmployeeID</param>
+            <returns>List that contain all VacationRequest-Objects</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectAllVacationRequestsOfDivision(System.Int32)">
+            <summary>
+            selects all VacationRequests of one Division
+            </summary>
+            <param name="DivisionID">ID of Division</param>
+            <returns>returns a list of all vacationrequests</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.UpdateVacationRequestStatus(System.UInt64,VacationManagement.VacationRequestProcessingState,System.DateTime)">
+            <summary>
+            updates the State of the VacationRequest with the given VacationRequestID
+            </summary>
+            <param name="VacationRequestID">ID of the VacationRequest in which the state will be changed</param>
+            <param name="State">the to-be VacationProcessingState</param>
+            <param name="modificationDate">Dateime of modification</param>
+            <returns>true or false (update successfull or not)</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.UpdateNetVacationDays(System.UInt64,System.Int32)">
+            <summary>
+            Set NetVacationDays of a cancelled VacationRequest to Zero
+            </summary>
+            <param name="VacationRequestID"> ID of the Vacation Request to be cancelled</param>
+            <param name="value"></param>
+            <returns>TRUE if update was successful, else FALSE</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectShiftPartner(System.String)">
+            <summary>
+            select the shiftpartner of the given Employee
+            </summary>
+            <param name="EmployeeID">EmployeeID of</param>
+            <returns>string of the shiftpartner</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectRequester(System.UInt64)">
+            <summary>
+            selects the Employee of an VacationRequest
+            </summary>
+            <param name="VacationRequestID">ID of the VacationRequest</param>
+            <returns>EmployeeID of the VacationRequest owner</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectSubmittedVacationRequestsOfShiftPartner(System.String)">
+            <summary>
+            selects all VacationRequests of the Shiftpartner that are submitted
+            sortiert nach Startdatum
+            </summary>
+            <param name="EmployeeID">EmployeeID of Shift Partner</param>
+            <returns>List that contains Vacation Requests of ShiftPartner with state "submitted" only</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectEmployeesOfDivision(System.String)">
+            <summary>
+            This method can only be accessed by a person with role Division Manager in EULE
+            </summary>
+            <param name="EmployeeID">EmployeeID of person with role = Division Manager</param>
+            <returns>List that contains all Employees that are in the Division Managers Division</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectVacationRequestsInState(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            selects all VacationRequests for Employee with EmployeeID in one of the states out of the list
+            sortiert nach Startdatum
+            </summary>
+            <param name="EmployeeID">ID of VacationRequests owner</param>
+            <param name="States">possible States we want for VacationRequests</param>
+            <returns>list that contains VacationRequests</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectVacationRequestsInState(System.String,System.String)">
+            <summary>
+            selects all VacationRequests for Employee with EmployeeID in the same State like State
+            sortiert nach Startdatum
+            </summary>
+            <param name="EmployeeID">EmployeeID of the VacationRequests owner</param>
+            <param name="State">only possible State for VacationRequests we want to get out of the DB</param>
+            <returns>list that contains VacationRequests</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectVacationRequest(System.UInt64)">
+            <summary>
+            Selects one VacationRequest
+            </summary>
+            <param name="VacationRequestID">VacationRequestID of that one Request</param>
+            <returns>that one VacationRequest</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.UpdateRemainingVacationDays(System.String,System.Int32)">
+            <summary>
+            updates the RemainingVacationDays for the Employee
+            </summary>
+            <param name="EmployeeID">EmployeeID of the Employee to be updated</param>
+            <param name="RemainingVacationDays">RemainingVacationDays-to-be</param>
+            <returns>update was true or false (succeeded or not)</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectEmployeeFullName(System.String)">
+            <summary>
+            selects the full name of one employee
+            </summary>
+            <param name="EmployeeID">EmployeeID of the wanted Employee</param>
+            <returns>string with full name of the Employee</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectVacationDaysPreviousYear(System.String)">
+            <summary>
+            selects all VacationDays of Previous Year of Employee
+            </summary>
+            <param name="EmployeeID">EmployeeID </param>
+            <returns>number of VacationDays of Previous Year</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectVacationDaysTotal(System.String)">
+            <summary>
+            selects all VacationDays of Employee for this year, excluding the days he got from the previous year
+            </summary>
+            <param name="EmployeeID">EmployeeID</param>
+            <returns>int number of VacationDaysTotal this year</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectVacationRequestStartDate(System.UInt64)">
+            <summary>
+            selects the StartDate of one VacationRequest
+            </summary>
+            <param name="VacationRequestID">ID of VacationRequest</param>
+            <returns>datetime StartDate</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectVacationRequestEndDate(System.UInt64)">
+            <summary>
+            selects the EndDate of VacationRequest
+            </summary>
+            <param name="VacationRequestID">ID of VacationRequest</param>
+            <returns>datetime of EndDate</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.DeleteAllVacationRequests(System.String)">
+            <summary>
+            deletes all VacationRequests for one Employee
+            </summary>
+            <param name="EmployeeID">ID of Employee</param>
+            <returns>true if delete command succeeded or false if it failed</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectRole(System.String)">
+            <summary>
+            selects Role of Employee
+            </summary>
+            <param name="EmployeeID">ID of Employee</param>
+            <returns>string that contains the role, if there is no role it returns false</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SetRole(System.String,System.String)">
+            <summary>
+            inserts the role for one Employee, Employee need to exist !
+            </summary>
+            <param name="EmployeeID">ID of Employee</param>
+            <param name="Role">his new Role which is one of these(Administrator, Bereichsleiter, Mitarbeiter)</param>
+            <returns>bool if insert succeeded(true) or failed(false)</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.ChangeRole(System.String,System.String)">
+            <summary>
+            changes the Role of one Employee
+            </summary>
+            <param name="EmployeeID">ID of that Employee</param>
+            <param name="Role">the Role he will get which is one of these(Administrator, Bereichsleiter, Mitarbeiter)</param>
+            <returns>bool if update succeeded(true) or failed(false)</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.SelectUncanceledEmployeeVacationRequestInTimePeriod(VacationManagement.VacationRequest,System.String)">
+            <summary>
+            Select VacationRequests of the Requester without status canceled which overlap with the new VacationRequest
+            </summary>
+            <param name="VacationRequest">VacationRequest of the Requester</param>
+            <param name="EmployeeID">EmployeeID of the Requester</param>
+            <returns>List two DateTimes: Startdate and Enddate of the selected VacationRequests</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.UpdateVacationRequestPeriodOverlapNote(System.UInt64,System.Boolean)">
+            <summary>
+             Update the OverlapNote of a VacationRequest
+            </summary>
+            <param name="VacationRequestID">VacationRequestID of a VacationRquest which will be edited</param>
+            <param name="state">a Boolean state if an overlap exists or not</param>
+            <returns>Boolean result if the function worked correctly and all changes are wrote in the datebase</returns>
+        </member>
+        <member name="M:DatabaseManagement.DBQuery.ResetDB">
+            <summary>
+            resets db to initial test data
+            </summary>
+            <returns>bool if success or failure</returns>
+        </member>
+        <member name="M:VacationManagement.TimePeriodOverlapCheck.Validate(System.Int32)">
+            <summary>
+            Dependent on the checktype, method checks either for overlaps between the new submitted vacation request and DB-stored lock periods,
+            or between overlaps with a vacation request by the deputy
+            </summary>
+            <param name="CheckType"> an int value that choose the test type</param>
+            <returns> true if no lock or overlap is present, else false</returns>
+        </member>
+        <member name="M:VacationManagement.VacationRequest.InsertIntoDB">
+            <summary>
+            1. starts the VacationRequestIDGenerator
+            2. starts the validation process
+            </summary>
+            <returns>"true" if the vacation request is successfully created, else "false" </returns>
+        </member>
+        <member name="M:VacationManagement.VacationRequest.#ctor">
+            <summary>
+            constructor to create a vacation request out of the GUI
+            </summary>
+        </member>
+        <member name="M:VacationManagement.VacationRequest.#ctor(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            constructor to create a vacation request 
+            </summary>
+        </member>
+        <member name="M:VacationManagement.VacationRequest.#ctor(System.UInt64,System.String,System.DateTime,System.DateTime,System.DateTime,System.String,VacationManagement.VacationRequestProcessingState,System.DateTime,System.Boolean,System.Boolean,System.Int32)">
+            <summary>
+            general constructor 
+            </summary>
+        </member>
+        <member name="M:VacationManagement.VacationRequest.DetermineWorkingDaysInVacationRequest(VacationManagement.VacationRequest)">
+            <summary>
+            Calculates the needed vacation days for the desired holiday period. Weekends and holidays are deducted.
+            </summary>
+            <param name="VacationRequest">VacationRequest of the Requester</param>
+            <returns>number of needed vacation days</returns>
+        </member>
+        <member name="M:VacationManagement.VacationRequest.Validate">
+            <summary>
+             starts the VacationRequestValidator
+            </summary>
+            <returns>result == true, if the employee has enough remaining vacation days</returns>
+        </member>
+        <member name="M:VacationManagement.VacationRequest.SendDataToDB">
+            <summary>
+            1. writes an information email
+            2. writes vacation request in the database
+            </summary>
+            <returns>Boolean status if the insert into database was successful</returns>
+        </member>
+        <member name="M:VacationManagement.VacationRequestIDGenerator.GenerateID(System.String)">
+            <summary>
+            generates a unique vactionRequestID
+            </summary>
+            <param name="EmployeeID"> the EmployeeID of the creator</param>
+            <returns>vactionRequestID</returns>
+        </member>
+        <member name="T:VacationManagement.VacationRequestProcessingState">
+            <summary>
+            the possible ProcessingState of a VacationRequest
+            </summary>
+        </member>
+        <member name="M:VacationManagement.VacationRequestValidator.Validate(VacationManagement.VacationRequest)">
+            <summary>
+            (1) checks if remaining vacation days of employee suffice, 
+            (2) sets lock period flag if appropriate,
+            (3) sets vacation period overlap flag if appropriate
+            </summary>
+            <param name="VacationRequest"> a vacation request, passed by reference</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

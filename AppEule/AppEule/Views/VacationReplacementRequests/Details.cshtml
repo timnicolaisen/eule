@@ -1,0 +1,42 @@
+﻿@model AppEule.Models.VacationReplacementRequest
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>VacationReplacementRequest</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ReplacementProcessingState)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ReplacementProcessingState)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.VacationRequest.VacationType)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.VacationRequest.VacationType)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ReplacementRequestID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

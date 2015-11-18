@@ -1,0 +1,92 @@
+﻿@using AppEule.Models
+@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - elektronische Urlaubserfassung</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link href="@Url.Content("~/Content/login.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+
+    <div class="container">
+        <div>
+            <img src="@Url.Content("~/Content/images/logo_start.png")" class="img-responsive img-center" alt="Responsive image">
+        </div>
+        <div class="card card-container">
+            <img id="profile-img" class="img-responsive img-center" src="@Url.Content("~/Content/images/htw_logo.png")" />
+            <p id="profile-name" class="profile-name-card"></p>
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Benutzerkennung" })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Passwort" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class=" col-md-12">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Anmelden" class="btn btn-default" />
+                    </div>
+                </div>
+
+
+                <p>
+                    @Html.ActionLink("Kennwort vergessen?", "ForgotPassword", "Account")
+                </p>
+            }
+
+
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+
+
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-2"><p class="pull-left">EULE Version 1.0</p></div>
+            <div class="col-md-5"></div>
+            <div class="col-md-5"><p>Diese Webseite ist Teil eines studentischen Projektes im Modul Software Engineering II (&copy 2015).</p></div>
+        </div>
+    </div>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

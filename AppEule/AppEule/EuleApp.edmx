@@ -1,0 +1,837 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EuleApp.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="StaffID" Type="char" MaxLength="5" />
+          <Property Name="ShiftGroupID" Type="int" />
+          <Property Name="DivisionID" Type="int" />
+          <Property Name="FirstName" Type="nchar" MaxLength="30" />
+          <Property Name="LastName" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'aspnet-AppEule-20150522045359.dbo.Calendar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Calendar">
+          <Key>
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Weekday" />
+            <PropertyRef Name="DayType" />
+          </Key>
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Weekday" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="DayType" Type="char" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="DivisionID" />
+          </Key>
+          <Property Name="DivisionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DivisionTitle" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="DivisionManagerID" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShiftGroup">
+          <Key>
+            <PropertyRef Name="ShiftGroupID" />
+          </Key>
+          <Property Name="ShiftGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID01" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EmployeeID02" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SickNote">
+          <Key>
+            <PropertyRef Name="SickNoteID" />
+          </Key>
+          <Property Name="SickNoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SickLeaveStartDate" Type="date" Nullable="false" />
+          <Property Name="SickLeaveEndDate" Type="date" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VacationEntitlement">
+          <Key>
+            <PropertyRef Name="VacationEntitlementID" />
+          </Key>
+          <Property Name="VacationEntitlementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VacationDaysTotal" Type="int" Nullable="false" />
+          <Property Name="VacationDaysPreviousYear" Type="int" Nullable="false" />
+          <Property Name="VacationDayRemaining" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VacationLockPeriod">
+          <Key>
+            <PropertyRef Name="LockPeriodID" />
+          </Key>
+          <Property Name="LockPeriodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LockPeriodStartDate" Type="date" Nullable="false" />
+          <Property Name="LockPeriodEndDate" Type="date" Nullable="false" />
+          <Property Name="DivisionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VacationReplacementRequest">
+          <Key>
+            <PropertyRef Name="ReplacementRequestID" />
+          </Key>
+          <Property Name="ReplacementRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReplacementProcessingState" Type="char" MaxLength="35" Nullable="false" />
+          <Property Name="VacationRequestID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VacationRequest">
+          <Key>
+            <PropertyRef Name="VacationRequestID" />
+          </Key>
+          <Property Name="VacationRequestID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VacationStartDate" Type="date" Nullable="false" />
+          <Property Name="VacationEndDate" Type="date" Nullable="false" />
+          <Property Name="SubmissionDate" Type="datetime" />
+          <Property Name="VacationType" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="VacationProcessingState" Type="char" MaxLength="35" />
+          <Property Name="ModificationDate" Type="datetime" />
+          <Property Name="VacationPeriodOverlapNote" Type="bit" />
+          <Property Name="VacationLockPeriodNote" Type="bit" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AspNetUse__Divis__5AEE82B9">
+          <End Role="Division" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="DivisionID" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="DivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AspNetUse__Shift__38996AB5">
+          <End Role="ShiftGroup" Type="Self.ShiftGroup" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftGroup">
+              <PropertyRef Name="ShiftGroupID" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="ShiftGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SickNote__Employ__47DBAE45">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="SickNote" Type="Self.SickNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SickNote">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VacationE__Emplo__4AB81AF0">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="VacationEntitlement" Type="Self.VacationEntitlement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VacationEntitlement">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VacationL__Divis__4D94879B">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="VacationLockPeriod" Type="Self.VacationLockPeriod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="DivisionID" />
+            </Principal>
+            <Dependent Role="VacationLockPeriod">
+              <PropertyRef Name="DivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VacationR__Emplo__73BA3083">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="VacationRequest" Type="Self.VacationRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VacationRequest">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VacationR__Vacat__76969D2E">
+          <End Role="VacationRequest" Type="Self.VacationRequest" Multiplicity="1" />
+          <End Role="VacationReplacementRequest" Type="Self.VacationReplacementRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VacationRequest">
+              <PropertyRef Name="VacationRequestID" />
+            </Principal>
+            <Dependent Role="VacationReplacementRequest">
+              <PropertyRef Name="VacationRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EuleAppModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShiftGroup" EntityType="Self.ShiftGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SickNote" EntityType="Self.SickNote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VacationEntitlement" EntityType="Self.VacationEntitlement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VacationLockPeriod" EntityType="Self.VacationLockPeriod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VacationReplacementRequest" EntityType="Self.VacationReplacementRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VacationRequest" EntityType="Self.VacationRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calendar" EntityType="Self.Calendar" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Calendar].[Date] AS [Date], 
+    [Calendar].[Weekday] AS [Weekday], 
+    [Calendar].[DayType] AS [DayType]
+    FROM [dbo].[Calendar] AS [Calendar]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__AspNetUse__Divis__5AEE82B9" Association="Self.FK__AspNetUse__Divis__5AEE82B9">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AspNetUse__Shift__38996AB5" Association="Self.FK__AspNetUse__Shift__38996AB5">
+            <End Role="ShiftGroup" EntitySet="ShiftGroup" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SickNote__Employ__47DBAE45" Association="Self.FK__SickNote__Employ__47DBAE45">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="SickNote" EntitySet="SickNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VacationE__Emplo__4AB81AF0" Association="Self.FK__VacationE__Emplo__4AB81AF0">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="VacationEntitlement" EntitySet="VacationEntitlement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VacationL__Divis__4D94879B" Association="Self.FK__VacationL__Divis__4D94879B">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="VacationLockPeriod" EntitySet="VacationLockPeriod" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VacationR__Emplo__73BA3083" Association="Self.FK__VacationR__Emplo__73BA3083">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="VacationRequest" EntitySet="VacationRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VacationR__Vacat__76969D2E" Association="Self.FK__VacationR__Vacat__76969D2E">
+            <End Role="VacationRequest" EntitySet="VacationRequest" />
+            <End Role="VacationReplacementRequest" EntitySet="VacationReplacementRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EuleApp.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StaffID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="ShiftGroupID" Type="Int32" />
+          <Property Name="DivisionID" Type="Int32" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Division" Relationship="Self.FK__AspNetUse__Divis__5AEE82B9" FromRole="AspNetUsers" ToRole="Division" />
+          <NavigationProperty Name="ShiftGroup" Relationship="Self.FK__AspNetUse__Shift__38996AB5" FromRole="AspNetUsers" ToRole="ShiftGroup" />
+          <NavigationProperty Name="SickNotes" Relationship="Self.FK__SickNote__Employ__47DBAE45" FromRole="AspNetUsers" ToRole="SickNote" />
+          <NavigationProperty Name="VacationEntitlements" Relationship="Self.FK__VacationE__Emplo__4AB81AF0" FromRole="AspNetUsers" ToRole="VacationEntitlement" />
+          <NavigationProperty Name="VacationRequests" Relationship="Self.FK__VacationR__Emplo__73BA3083" FromRole="AspNetUsers" ToRole="VacationRequest" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="DivisionID" />
+          </Key>
+          <Property Name="DivisionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DivisionTitle" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DivisionManagerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK__AspNetUse__Divis__5AEE82B9" FromRole="Division" ToRole="AspNetUsers" />
+          <NavigationProperty Name="VacationLockPeriods" Relationship="Self.FK__VacationL__Divis__4D94879B" FromRole="Division" ToRole="VacationLockPeriod" />
+        </EntityType>
+        <EntityType Name="ShiftGroup">
+          <Key>
+            <PropertyRef Name="ShiftGroupID" />
+          </Key>
+          <Property Name="ShiftGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID01" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeID02" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK__AspNetUse__Shift__38996AB5" FromRole="ShiftGroup" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="SickNote">
+          <Key>
+            <PropertyRef Name="SickNoteID" />
+          </Key>
+          <Property Name="SickNoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SickLeaveStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SickLeaveEndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EmployeeID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK__SickNote__Employ__47DBAE45" FromRole="SickNote" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="VacationEntitlement">
+          <Key>
+            <PropertyRef Name="VacationEntitlementID" />
+          </Key>
+          <Property Name="VacationEntitlementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VacationDaysTotal" Type="Int32" Nullable="false" />
+          <Property Name="VacationDaysPreviousYear" Type="Int32" Nullable="false" />
+          <Property Name="VacationDayRemaining" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK__VacationE__Emplo__4AB81AF0" FromRole="VacationEntitlement" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="VacationLockPeriod">
+          <Key>
+            <PropertyRef Name="LockPeriodID" />
+          </Key>
+          <Property Name="LockPeriodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LockPeriodStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LockPeriodEndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DivisionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Division" Relationship="Self.FK__VacationL__Divis__4D94879B" FromRole="VacationLockPeriod" ToRole="Division" />
+        </EntityType>
+        <EntityType Name="VacationReplacementRequest">
+          <Key>
+            <PropertyRef Name="ReplacementRequestID" />
+          </Key>
+          <Property Name="ReplacementRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReplacementProcessingState" Type="String" MaxLength="35" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="VacationRequestID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="VacationRequest" Relationship="Self.FK__VacationR__Vacat__76969D2E" FromRole="VacationReplacementRequest" ToRole="VacationRequest" />
+        </EntityType>
+        <EntityType Name="VacationRequest">
+          <Key>
+            <PropertyRef Name="VacationRequestID" />
+          </Key>
+          <Property Name="VacationRequestID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VacationStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VacationEndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SubmissionDate" Type="DateTime" Precision="3" />
+          <Property Name="VacationType" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="VacationProcessingState" Type="String" MaxLength="35" FixedLength="true" Unicode="false" />
+          <Property Name="ModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="VacationPeriodOverlapNote" Type="Boolean" />
+          <Property Name="VacationLockPeriodNote" Type="Boolean" />
+          <Property Name="EmployeeID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK__VacationR__Emplo__73BA3083" FromRole="VacationRequest" ToRole="AspNetUsers" />
+          <NavigationProperty Name="VacationReplacementRequests" Relationship="Self.FK__VacationR__Vacat__76969D2E" FromRole="VacationRequest" ToRole="VacationReplacementRequest" />
+        </EntityType>
+        <EntityType Name="Calendar">
+          <Key>
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Weekday" />
+            <PropertyRef Name="DayType" />
+          </Key>
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Weekday" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DayType" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AspNetUse__Divis__5AEE82B9">
+          <End Role="Division" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="DivisionID" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="DivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AspNetUse__Shift__38996AB5">
+          <End Role="ShiftGroup" Type="Self.ShiftGroup" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftGroup">
+              <PropertyRef Name="ShiftGroupID" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="ShiftGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SickNote__Employ__47DBAE45">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="SickNote" Type="Self.SickNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SickNote">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VacationE__Emplo__4AB81AF0">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="VacationEntitlement" Type="Self.VacationEntitlement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VacationEntitlement">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VacationR__Emplo__73BA3083">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="VacationRequest" Type="Self.VacationRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VacationRequest">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VacationL__Divis__4D94879B">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="VacationLockPeriod" Type="Self.VacationLockPeriod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="DivisionID" />
+            </Principal>
+            <Dependent Role="VacationLockPeriod">
+              <PropertyRef Name="DivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VacationR__Vacat__76969D2E">
+          <End Role="VacationRequest" Type="Self.VacationRequest" Multiplicity="1" />
+          <End Role="VacationReplacementRequest" Type="Self.VacationReplacementRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VacationRequest">
+              <PropertyRef Name="VacationRequestID" />
+            </Principal>
+            <Dependent Role="VacationReplacementRequest">
+              <PropertyRef Name="VacationRequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="EuleApp_DatabaseEntityModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Divisions" EntityType="Self.Division" />
+          <EntitySet Name="ShiftGroups" EntityType="Self.ShiftGroup" />
+          <EntitySet Name="SickNotes" EntityType="Self.SickNote" />
+          <EntitySet Name="VacationEntitlements" EntityType="Self.VacationEntitlement" />
+          <EntitySet Name="VacationLockPeriods" EntityType="Self.VacationLockPeriod" />
+          <EntitySet Name="VacationReplacementRequests" EntityType="Self.VacationReplacementRequest" />
+          <EntitySet Name="VacationRequests" EntityType="Self.VacationRequest" />
+          <EntitySet Name="Calendars" EntityType="Self.Calendar" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AspNetUse__Divis__5AEE82B9" Association="Self.FK__AspNetUse__Divis__5AEE82B9">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AspNetUse__Shift__38996AB5" Association="Self.FK__AspNetUse__Shift__38996AB5">
+            <End Role="ShiftGroup" EntitySet="ShiftGroups" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SickNote__Employ__47DBAE45" Association="Self.FK__SickNote__Employ__47DBAE45">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="SickNote" EntitySet="SickNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VacationE__Emplo__4AB81AF0" Association="Self.FK__VacationE__Emplo__4AB81AF0">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="VacationEntitlement" EntitySet="VacationEntitlements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VacationR__Emplo__73BA3083" Association="Self.FK__VacationR__Emplo__73BA3083">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="VacationRequest" EntitySet="VacationRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VacationL__Divis__4D94879B" Association="Self.FK__VacationL__Divis__4D94879B">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="VacationLockPeriod" EntitySet="VacationLockPeriods" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VacationR__Vacat__76969D2E" Association="Self.FK__VacationR__Vacat__76969D2E">
+            <End Role="VacationRequest" EntitySet="VacationRequests" />
+            <End Role="VacationReplacementRequest" EntitySet="VacationReplacementRequests" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EuleAppModelStoreContainer" CdmEntityContainer="EuleApp_DatabaseEntityModel">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="EuleApp.Model.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="EuleApp.Model.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="EuleApp.Model.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="EuleApp.Model.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="ShiftGroupID" ColumnName="ShiftGroupID" />
+                <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="EuleApp.Model.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
+                <ScalarProperty Name="DivisionTitle" ColumnName="DivisionTitle" />
+                <ScalarProperty Name="DivisionManagerID" ColumnName="DivisionManagerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShiftGroups">
+            <EntityTypeMapping TypeName="EuleApp.Model.ShiftGroup">
+              <MappingFragment StoreEntitySet="ShiftGroup">
+                <ScalarProperty Name="ShiftGroupID" ColumnName="ShiftGroupID" />
+                <ScalarProperty Name="EmployeeID01" ColumnName="EmployeeID01" />
+                <ScalarProperty Name="EmployeeID02" ColumnName="EmployeeID02" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SickNotes">
+            <EntityTypeMapping TypeName="EuleApp.Model.SickNote">
+              <MappingFragment StoreEntitySet="SickNote">
+                <ScalarProperty Name="SickNoteID" ColumnName="SickNoteID" />
+                <ScalarProperty Name="SickLeaveStartDate" ColumnName="SickLeaveStartDate" />
+                <ScalarProperty Name="SickLeaveEndDate" ColumnName="SickLeaveEndDate" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VacationEntitlements">
+            <EntityTypeMapping TypeName="EuleApp.Model.VacationEntitlement">
+              <MappingFragment StoreEntitySet="VacationEntitlement">
+                <ScalarProperty Name="VacationEntitlementID" ColumnName="VacationEntitlementID" />
+                <ScalarProperty Name="VacationDaysTotal" ColumnName="VacationDaysTotal" />
+                <ScalarProperty Name="VacationDaysPreviousYear" ColumnName="VacationDaysPreviousYear" />
+                <ScalarProperty Name="VacationDayRemaining" ColumnName="VacationDayRemaining" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VacationLockPeriods">
+            <EntityTypeMapping TypeName="EuleApp.Model.VacationLockPeriod">
+              <MappingFragment StoreEntitySet="VacationLockPeriod">
+                <ScalarProperty Name="LockPeriodID" ColumnName="LockPeriodID" />
+                <ScalarProperty Name="LockPeriodStartDate" ColumnName="LockPeriodStartDate" />
+                <ScalarProperty Name="LockPeriodEndDate" ColumnName="LockPeriodEndDate" />
+                <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VacationReplacementRequests">
+            <EntityTypeMapping TypeName="EuleApp.Model.VacationReplacementRequest">
+              <MappingFragment StoreEntitySet="VacationReplacementRequest">
+                <ScalarProperty Name="ReplacementRequestID" ColumnName="ReplacementRequestID" />
+                <ScalarProperty Name="ReplacementProcessingState" ColumnName="ReplacementProcessingState" />
+                <ScalarProperty Name="VacationRequestID" ColumnName="VacationRequestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VacationRequests">
+            <EntityTypeMapping TypeName="EuleApp.Model.VacationRequest">
+              <MappingFragment StoreEntitySet="VacationRequest">
+                <ScalarProperty Name="VacationRequestID" ColumnName="VacationRequestID" />
+                <ScalarProperty Name="VacationStartDate" ColumnName="VacationStartDate" />
+                <ScalarProperty Name="VacationEndDate" ColumnName="VacationEndDate" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+                <ScalarProperty Name="VacationType" ColumnName="VacationType" />
+                <ScalarProperty Name="VacationProcessingState" ColumnName="VacationProcessingState" />
+                <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />
+                <ScalarProperty Name="VacationPeriodOverlapNote" ColumnName="VacationPeriodOverlapNote" />
+                <ScalarProperty Name="VacationLockPeriodNote" ColumnName="VacationLockPeriodNote" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calendars">
+            <EntityTypeMapping TypeName="EuleApp.Model.Calendar">
+              <MappingFragment StoreEntitySet="Calendar">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Weekday" ColumnName="Weekday" />
+                <ScalarProperty Name="DayType" ColumnName="DayType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EuleApp.Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

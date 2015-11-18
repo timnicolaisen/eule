@@ -1,0 +1,188 @@
+﻿@model System.Collections.Generic.IEnumerable<GUIManagement.AllVacationRequestViewItem>
+
+
+@using System
+@using System.Collections
+@using System.Collections.Generic
+@using AppEule.Models
+@using Microsoft.Ajax.Utilities
+@using TestAjax.Helpers
+@using VacationManagement;
+@using GUIManagement;
+
+
+
+
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Bestätigung:</strong> @TempData["success"]
+    </div>
+}
+
+
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Fehler:</strong> @TempData["error"]
+    </div>
+}
+
+<div class="page-header">
+    <h2>Bereichsverwaltung</h2>
+</div>
+
+<h4>Alle Urlaubsanträge</h4>
+<div class="">
+    <div class="col-lg-offset-9 ">
+        <form action="#" method="get">
+            <div class="input-group">
+                <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
+                <input class="form-control" id="system-search" name="q" placeholder="Suchen" required>
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="table-responsive">
+
+
+                <table id="table-2" class="table table-bordred table-striped table-list-search">
+
+                    <thead>
+
+                    <th>Zeitraum</th>
+                    <th>Antragssteller</th>
+                    <th>Urlaubstage</th>
+                    
+                    
+                    <th>Status</th>
+                    <th>Letzte Änderung</th>
+                    
+                    <th></th>
+                  
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td class="col-md-2">
+                                    @Html.DisplayFor(modelItem => item.VacationStartDateViewString) - @Html.DisplayFor(modelItem => item.VacationEndDateViewString)
+                                </td>
+                                <td class="col-md-2">
+                                    @Html.DisplayFor(modelItem => item.RequesterFullName)
+                                </td>
+                                <td class="col-md-1">
+                                    @Html.DisplayFor(modelItem => item.NetVacationDaysViewString)
+                                </td>
+                                
+                                <td class="col-md-2">
+                                    @Html.DisplayFor(modelItem => item.VacationRequestProcessingStateViewString)
+                                </td>
+
+                                <td class="col-md-2">
+                                    @Html.ValueFor(modelItem => item.ModificationDateViewString)
+                                </td>
+                                
+                                <td class="col-md-1">
+
+                                <td class="col-md-1">
+                                    <button type="button" class="btn btn-danger btn_small btn-sm" data-toggle="modal" data-target="#@item.VacationRequestID"><span class='fa fa-ban fa-inverse'></span></button>
+                                </td>
+                                   
+                                
+
+
+                            </tr>
+    <div class="modal fade" id="@item.VacationRequestID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <i class="fa fa-info-circle fa-3x "></i>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                   
+                      
+                            <span>Bitte bestätigen Sie die unwiderrufliche Löschung des gewählten Urlaubsantrages.
+                    <br /> 
+                    <br />
+                                <ul class="list-unstyled">
+                                    <li><strong>Mitarbeiter:</strong> @item.RequesterFullName    </li>
+                                    <li><strong>Urlaubstage:</strong>  @item.NetVacationDaysViewString</li>
+                                </ul>
+                            
+                            
+                             </span>
+                      
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="deleteStopped(this)" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                    @Html.NoEncodeActionLink("<span class=''>Bestätigen</span>", "Urlaubsantrag stornieren", "Delete", "VacationRequests", routeValues: new { id = item.VacationRequestID }, htmlAttributes: new { @class = "btn btn-success" })
+                </div>
+            </div>
+        </div>
+    </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var activeSystemClass = $('.list-group-item.active');
+
+        //something is entered in search form
+        $('#system-search').keyup(function () {
+            var that = this;
+            // affect all table rows on in systems table
+            var tableBody = $('.table-list-search tbody');
+            var tableRowsClass = $('.table-list-search tbody tr');
+            $('.search-sf').remove();
+            tableRowsClass.each(function (i, val) {
+
+                //Lower text for case insensitive
+                var rowText = $(val).text().toLowerCase();
+                var inputText = $(that).val().toLowerCase();
+                if (inputText != '') {
+                    $('.search-query-sf').remove();
+                    tableBody.prepend('<tr class="search-query-sf"><td colspan="6"><strong>Suche nach: "'
+                        + $(that).val()
+                        + '"</strong></td></tr>');
+                }
+                else {
+                    $('.search-query-sf').remove();
+                }
+
+                if (rowText.indexOf(inputText) == -1) {
+                    //hide rows
+                    tableRowsClass.eq(i).hide();
+
+                }
+                else {
+                    $('.search-sf').remove();
+                    tableRowsClass.eq(i).show();
+                }
+            });
+            //all tr elements are hidden
+            if (tableRowsClass.children(':visible').length == 0) {
+                tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">Keine Einträge vorhanden.</td></tr>');
+            }
+        });
+    });
+</script>

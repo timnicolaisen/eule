@@ -1,0 +1,12 @@
+﻿@using TestAjax.Helpers
+
+@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+<div class="pull-right">
+    @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Add new Person", "Create", "People", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+</div>

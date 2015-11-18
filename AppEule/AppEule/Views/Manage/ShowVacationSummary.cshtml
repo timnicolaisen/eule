@@ -1,0 +1,47 @@
+﻿@model GUIManagement.VacationEntitlementViewItem
+
+@{
+    Layout = null;
+}
+
+
+
+<div class="row">
+
+    <div class="col-md-9"><span><strong>Verfügbare Urlaubstage</strong></span></div>
+    <div class="col-md-3"><span class="badge progress-bar-danger">@Html.DisplayFor(model => model.RemainingVacationDays)</span></div>
+
+</div>
+
+
+
+<div class="divider">
+   
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-9"><span><strong>Urlaubsanspruch 2015</strong></span></div>
+    <div class="col-md-3"><span class="badge">@Html.DisplayFor(model => model.VacationDaysTotal)</span></div>
+</div>
+            @if (Model.RemainingVacationDays > Model.VacationDaysTotal  && Model.VacationDaysPreviousYear > 0)
+            {
+               
+                        <br />
+                        <div class="row">
+                            <div class="col-md-9">
+                                <span>
+                                    <strong>Resturlaub von 2014</strong>
+                                </span>
+                            </div>
+                            <div class="col-md-3">
+                            <span class="badge">@Html.DisplayFor(model => model.VacationDaysPreviousYear)</span>
+                            </div>
+                        </div>
+                   
+            }
+
+
+
+

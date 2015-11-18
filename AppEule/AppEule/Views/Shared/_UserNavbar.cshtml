@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+<div class="navbar-inner">   </div>
+<div class="subnavbar ">
+    <div class="subnavbar-inner">
+        <div class="dash pull-left">
+            <a href="#"><img src="~/Content/images/logo_dash.png" class="img-responsive center-block" alt="Responsive image"></a>
+        </div>
+        <div class="dash pull-right">
+            <ul class="mainnav">
+                <li>
+                    <a href="" data-title="add" data-toggle="modal" data-target="#add">
+                        <i class="fa fa-plus"></i>
+                        <span>Urlaubsantrag</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="@Url.Action("Index", "VacationRequests")">
+                        <i class="fa fa-calendar"></i>
+                        <span>Urlaubsplanung</span>
+                    </a>
+                </li>
+                @if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Bereichsleiter")) )
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "PendingVacationRequests")">
+                            <i class="fa fa-bar-chart"></i>
+                            <span>Bereichsplanung</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-coffee"></i>
+                            <span>Bereich verwalten</span>
+                            <b class="caret"></b>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index", "Employee")" >Mitarbeiter</a></li>
+                            <li class="disabled" ><a href="@Url.Action("Index", "VacationRequests")">Schichtgruppen</a></li>
+                            <li class="disabled"><a href="@Url.Action("Index", "VacationRequests")">Krankmeldung</a></li>
+                            <li class="disabled"><a href="@Url.Action("Index", "VacationRequests")">Urlaubssperren</a></li>
+                            <li class="disabled"><a href="@Url.Action("Index", "VacationRequests")">Urlaubsanspruch</a></li>
+                            <li><a href="@Url.Action("All", "VacationRequests")">Urlaubshistorie</a></li>
+
+                        </ul>
+
+                    </li>
+                }
+                @if (Request.IsAuthenticated && User.IsInRole("Verwalter"))
+                {
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-coffee"></i>
+                        <span>Bereich verwalten</span>
+                        <b class="caret"></b>
+                    </a>
+                
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("Index", "Employee")">Mitarbeiter</a></li>
+                        <li><a href="@Url.Action("Index", "VacationRequests")">Schichtgruppen</a></li>
+                        <li><a href="@Url.Action("Index", "VacationRequests")">Krankmeldung</a></li>
+                        <li><a href="@Url.Action("Index", "VacationRequests")">Urlaubsanspruch</a></li>
+                        <li><a href="@Url.Action("Index", "VacationRequests")">Befürwortete Urlaubsanträge</a></li>
+                    </ul>
+
+                </li>
+                }
+                <li>
+
+                  
+                        <a href="@Url.Action("LogOff", "Account")">
+                            <i class="fa fa-sign-out"></i>
+                            <span>Abmelden</span>
+                        </a>
+                    </li>
+                
+                </ul>
+
+            </div> <!-- /dash -->
+
+        </div> <!-- /subnavbar-inner -->
+
+    </div> <!-- /subnavbar -->
+
+

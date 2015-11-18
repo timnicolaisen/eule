@@ -1,0 +1,233 @@
+﻿-- kein Reset, erstellt Datenbank direkt --
+
+USE master;
+CREATE DATABASE EULE_ASP;
+GO
+USE EULE_ASP;
+GO
+
+/* Tables we just need for using AspNet Login*/
+CREATE TABLE [dbo].[AspNetRoles] (
+    [Id]   NVARCHAR (128) NOT NULL,
+    [Name] NVARCHAR (256) NOT NULL,
+    CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+	
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex]
+    ON [dbo].[AspNetRoles]([Name] ASC);
+
+CREATE TABLE [dbo].[Division] (
+    [DivisionID]        INT            IDENTITY (1, 1) NOT NULL,
+    [DivisionTitle]     NVARCHAR (30)      NOT NULL,
+    [DivisionManagerID] NVARCHAR (128) NULL,
+    PRIMARY KEY CLUSTERED ([DivisionID] ASC)
+);
+
+CREATE TABLE [dbo].[ShiftGroup] (
+    [ShiftGroupID] INT            IDENTITY (1, 1) NOT NULL,
+    [EmployeeID01] NVARCHAR (128) NOT NULL,
+    [EmployeeID02] NVARCHAR (128) NOT NULL,
+    PRIMARY KEY CLUSTERED ([ShiftGroupID] ASC)
+);
+
+/* AspNet User Table for storing main information - in our context it will be the former EMPLOYEE table
+Changes:
+- EmployeeID is now ID as NVARCHAR (128) (only in table AspNetUsers)
+
+*/
+CREATE TABLE [dbo].[AspNetUsers] (
+    [Id]                   NVARCHAR (128) NOT NULL,
+    [Email]                NVARCHAR (256) NULL,
+    [EmailConfirmed]       BIT            NOT NULL,
+    [PasswordHash]         NVARCHAR (MAX) NULL,
+    [SecurityStamp]        NVARCHAR (MAX) NULL,
+    [PhoneNumber]          NVARCHAR (MAX) NULL,
+    [PhoneNumberConfirmed] BIT            NOT NULL,
+    [TwoFactorEnabled]     BIT            NOT NULL,
+    [LockoutEndDateUtc]    DATETIME       NULL,
+    [LockoutEnabled]       BIT            NOT NULL,
+    [AccessFailedCount]    INT            NOT NULL,
+    [UserName]             NVARCHAR (256) NOT NULL,
+    [ShiftGroupID]		   INT			  NULL,
+    [DivisionID]           INT            NOT NULL,
+	[FirstName]			   NVARCHAR(30)   NOT NULL,
+	[LastName]			   NVARCHAR(30)   NOT NULL,
+    CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC),
+	FOREIGN KEY(ShiftGroupID) REFERENCES ShiftGroup(ShiftGroupID),						
+	FOREIGN KEY(DivisionID) REFERENCES Division(DivisionID)
+);
+
+CREATE TABLE [dbo].[AspNetUserClaims] (
+    [Id]         INT            IDENTITY (1, 1) NOT NULL,
+    [UserId]     NVARCHAR (128) NOT NULL,
+    [ClaimType]  NVARCHAR (MAX) NULL,
+    [ClaimValue] NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_dbo.AspNetUserClaims] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_UserId]
+    ON [dbo].[AspNetUserClaims]([UserId] ASC);
+
+
+CREATE TABLE [dbo].[AspNetUserLogins] (
+    [LoginProvider] NVARCHAR (128) NOT NULL,
+    [ProviderKey]   NVARCHAR (128) NOT NULL,
+    [UserId]        NVARCHAR (128) NOT NULL,
+    CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED ([LoginProvider] ASC, [ProviderKey] ASC, [UserId] ASC),
+    CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_UserId]
+    ON [dbo].[AspNetUserLogins]([UserId] ASC);
+
+	
+CREATE TABLE [dbo].[AspNetUserRoles] (
+    [UserId] NVARCHAR (128) NOT NULL,
+    [RoleId] NVARCHAR (128) NOT NULL,
+    CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED ([UserId] ASC, [RoleId] ASC),
+    CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [dbo].[AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_UserId]
+    ON [dbo].[AspNetUserRoles]([UserId] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_RoleId]
+    ON [dbo].[AspNetUserRoles]([RoleId] ASC);
+
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex]
+    ON [dbo].[AspNetUsers]([UserName] ASC);
+
+
+CREATE TABLE [dbo].[SickNote] (
+    [SickNoteID]         INT            IDENTITY (1, 1) NOT NULL,
+    [SickLeaveStartDate] DATE           NOT NULL,
+    [SickLeaveEndDate]   DATE           NOT NULL,
+    [EmployeeID]         NVARCHAR (128) NOT NULL,
+    PRIMARY KEY CLUSTERED ([SickNoteID] ASC),
+    FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[AspNetUsers] ([Id])
+);
+
+CREATE TABLE [dbo].[VacationEntitlement] (
+    [VacationEntitlementID]    INT            IDENTITY (1, 1) NOT NULL,
+    [VacationDaysTotal]        INT            NOT NULL,
+    [VacationDaysPreviousYear] INT            NOT NULL,
+    [VacationDayRemaining]     INT            NOT NULL,
+    [EmployeeID]               NVARCHAR (128) NOT NULL,
+    PRIMARY KEY CLUSTERED ([VacationEntitlementID] ASC),
+    FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[AspNetUsers] ([Id])
+);
+
+CREATE TABLE [dbo].[VacationRequest] (
+    [VacationRequestID]         BIGINT         NOT NULL,
+    [VacationStartDate]         DATE           NOT NULL,
+    [VacationEndDate]           DATE           NOT NULL,
+    [SubmissionDate]            DATETIME       NOT NULL,
+    [VacationType]              NVARCHAR (30)  NOT NULL,
+    [VacationProcessingState]   NVARCHAR (35)  NOT NULL,
+    [ModificationDate]          DATETIME       NULL,
+    [VacationPeriodOverlapNote] BIT			   NULL,
+    [VacationLockPeriodNote]    BIT			   NULL,
+	[NetVacationDays]			INT			   NOT NULL,
+    [EmployeeID]                NVARCHAR (128) NOT NULL,
+    PRIMARY KEY CLUSTERED ([VacationRequestID] ASC),
+    FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[AspNetUsers] ([Id])
+);
+
+CREATE TABLE [dbo].[VacationLockPeriod] (
+    [LockPeriodID]        INT  IDENTITY (1, 1) NOT NULL,
+    [LockPeriodStartDate] DATE NOT NULL,
+    [LockPeriodEndDate]   DATE NOT NULL,
+    [DivisionID]          INT  NOT NULL,
+    PRIMARY KEY CLUSTERED ([LockPeriodID] ASC),
+    FOREIGN KEY ([DivisionID]) REFERENCES [dbo].[Division] ([DivisionID])
+);
+
+
+CREATE TABLE [dbo].[Calendar] ( 
+    Date 		DATE 		NOT NULL, 
+    Weekday 		NVARCHAR(30) 	NOT NULL, 
+    DayType 		NVARCHAR(30) 	NOT NULL
+);
+GO
+
+--	Division	--
+				
+		INSERT INTO Division VALUES ('Laborbereich','NULL');
+
+--	Calendar Holidays 2015-2018 --
+	
+
+		INSERT INTO Calendar VALUES ('20150101','Donnerstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20150403','Freitag','Feiertag');
+		INSERT INTO Calendar VALUES ('20150406','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20150501','Freitag','Feiertag');
+		INSERT INTO Calendar VALUES ('20150514','Donnerstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20150525','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20151003','Samstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20151031','Samstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20151118','Mittwoch','Feiertag');
+		INSERT INTO Calendar VALUES ('20151225','Freitag','Feiertag');
+		INSERT INTO Calendar VALUES ('20151226','Samstag','Feiertag');
+		
+		INSERT INTO Calendar VALUES ('20160101','Freitag','Feiertag');
+		INSERT INTO Calendar VALUES ('20160325','Freitag','Feiertag');
+		INSERT INTO Calendar VALUES ('20160328','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20160501','Sonntag','Feiertag');
+		INSERT INTO Calendar VALUES ('20160505','Donnerstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20160516','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20161003','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20161031','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20161116','Mittwoch','Feiertag');
+		INSERT INTO Calendar VALUES ('20161225','Sonntag','Feiertag');
+		INSERT INTO Calendar VALUES ('20161226','Montag','Feiertag');
+
+		INSERT INTO Calendar VALUES ('20170101','Sonntag','Feiertag');
+		INSERT INTO Calendar VALUES ('20170414','Freitag','Feiertag');
+		INSERT INTO Calendar VALUES ('20170417','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20170501','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20170525','Donnerstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20170605','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20171003','Dienstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20171031','Dienstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20171122','Mittwoch','Feiertag');
+		INSERT INTO Calendar VALUES ('20171225','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20171226','Dienstag','Feiertag');
+
+		INSERT INTO Calendar VALUES ('20180101','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20180330','Freitag','Feiertag');
+		INSERT INTO Calendar VALUES ('20180402','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20180501','Dienstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20180510','Donnerstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20180521','Montag','Feiertag');
+		INSERT INTO Calendar VALUES ('20181003','Mittwoch','Feiertag');
+		INSERT INTO Calendar VALUES ('20181031','Mittwoch','Feiertag');
+		INSERT INTO Calendar VALUES ('20181121','Mittwoch','Feiertag');
+		INSERT INTO Calendar VALUES ('20181225','Dienstag','Feiertag');
+		INSERT INTO Calendar VALUES ('20181226','Mittwoch','Feiertag');
+
+-- Roles --
+
+INSERT INTO AspNetRoles VALUES (4,'Administrator');
+INSERT INTO AspNetRoles VALUES (3,'Bereichsleiter');
+INSERT INTO AspNetRoles VALUES (2,'Verwalter');
+INSERT INTO AspNetRoles VALUES (1,'Mitarbeiter');
+GO
+
+INSERT INTO AspNetUsers VALUES ('bff0f95a-5b1a-42cc-a1cc-8f520477c37a','admin@eule.de',
+								'False','AJRpukSrJjBt2OS/KkVBicauJOuUczWa0r1/+qiFCXIjWBqfENU+o1xFFwzWWAi+CA==', 
+								'c1f282a8-2f59-4436-a220-784fb6674c4e',
+								NULL,'False','False',NULL,'True',0,'Administrator',NULL,(SELECT DivisionID FROM Division WHERE DivisionTitle = 'Laborbereich'),'Admin','Nistrator');
+
+INSERT INTO AspNetUserRoles values ('bff0f95a-5b1a-42cc-a1cc-8f520477c37a',3);

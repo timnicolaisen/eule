@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="89bd648aeb754468ba7d7b17721a6814" Name="Diagram1">
+        <EntityTypeShape EntityType="EuleApp.Model.AspNetRole" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.AspNetUserLogin" Width="4" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.AspNetUser" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.Division" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.ShiftGroup" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.SickNote" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.VacationEntitlement" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.VacationLockPeriod" Width="1.5" PointX="3" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.VacationReplacementRequest" Width="1.5" PointX="7.5" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.VacationRequest" Width="2.5" PointX="4.125" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="EuleApp.Model.Calendar" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="EuleApp.Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.FK__AspNetUse__Divis__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.FK__AspNetUse__Shift__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.FK__SickNote__Employ__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.FK__VacationE__Emplo__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.FK__VacationR__Emplo__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.FK__VacationL__Divis__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.FK__VacationR__Vacat__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="EuleApp.Model.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

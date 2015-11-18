@@ -1,0 +1,130 @@
+﻿@model System.Collections.Generic.IEnumerable<GUIManagement.VacationReplacementRequestViewItem>
+
+@using VacationManagement;
+@using TestAjax.Helpers;
+
+
+@{
+    Layout = null;
+}
+
+
+<div class="page-header">
+    <h4>Meine Vertretungsanfragen</h4>
+</div>
+<div class="">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="table-responsive">
+
+
+<table id="mytable" class="table table-bordred table-striped">
+
+    <thead>
+    <th>Zeitraum</th>
+    <th>Urlaubstage</th>
+    <th>Stellvertretung für</th>
+    <th>Status</th>
+    <th></th>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.VacationStartDateViewString) - @Html.DisplayFor(modelItem => item.VacationEndDateViewString)
+                </td>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.NetVacationDaysViewString)
+                </td>
+                <td class="col-md-3">
+                    @Html.DisplayFor(modelItem => item.RequesterFullName)
+                </td>
+                <td class="col-md-3">
+                    @Html.DisplayFor(modelItem => item.VacationRequestProcessingStateViewString)
+                </td>
+                <td class="col-md-1">
+                    <button type="button" class="btn btn-success btn_small btn-sm" title="Vertretungsanfrage zustimmen" data-toggle="modal" data-target="#agree_@item.VacationRequestID"><span class='fa fa-check'></span></button>
+
+                    <div class="modal fade" id="agree_@item.VacationRequestID" tabindex="-1" role="dialog" aria-labelledby="zustimmen" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <i class="fa fa-info-circle fa-3x "></i>
+                                    <h4 class="modal-title" id="myModalLabel"></h4>
+                                </div>
+                                <div class="modal-body">
+
+
+                                    <span>
+                                        Bitte bestätigen Sie die Zustimmung des gewählten Urlaubsantrages.
+                                        <br />
+                                        <br />
+                                        <ul class="list-unstyled">
+
+                                            <li><strong>Urlaubstage:</strong>  @item.NetVacationDaysViewString</li>
+                                        </ul>
+
+
+                                    </span>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                                    @Html.NoEncodeActionLink("<span class=''>Bestätigen</span>", "Vertretungsanfrage zustimmen", "Agree", "VacationReplacementRequests", routeValues: new { id = item.VacationRequestID }, htmlAttributes: new { @class = "btn btn-success" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="col-md-1">
+                    <button type="button" class="btn btn-danger btn_small btn-sm" title="Vertretungsanfrage ablehnen" data-toggle="modal" data-target="#disagree_@item.VacationRequestID"><span class='fa fa-ban fa-inverse'></span></button>
+                    <div class="modal fade" id="disagree_@item.VacationRequestID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <i class="fa fa-info-circle fa-3x "></i>
+                                    <h4 class="modal-title" id="myModalLabel"></h4>
+                                </div>
+                                <div class="modal-body">
+
+
+                                    <span>
+                                        Bitte bestätigen Sie die Ablehnung des gewählten Urlaubsantrages.
+                                        <br />
+                                        <br />
+                                        <ul class="list-unstyled">
+
+                                            <li><strong>Urlaubstage:</strong>  @item.NetVacationDaysViewString</li>
+                                        </ul>
+
+
+                                    </span>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                                    @Html.NoEncodeActionLink("<span class=''>Bestätigen</span>", "Vertretungsanfrage ablehnen", "Disagree", "VacationReplacementRequests", routeValues: new { id = item.VacationRequestID }, htmlAttributes: new { @class = "btn btn-success" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+
+    
+        }
+    </tbody>
+</table>
+                
+
+

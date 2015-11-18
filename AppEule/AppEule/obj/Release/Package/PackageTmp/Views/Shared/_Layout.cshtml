@@ -1,0 +1,121 @@
+﻿@*model <GUIManagement.*@
+
+@using System
+@using TestAjax.Helpers                     
+@using Microsoft.AspNet.Identity
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - elektronische Urlaubserfassung</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    
+</head>
+<body>
+    @{ Html.RenderPartial("_UserNavbar"); }
+
+
+ 
+    <div id="sidebar-wrapper">
+
+        <div class="row profile">
+            <div class="col-md-12">
+                <div class="profile-sidebar">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="img-responsive" alt="">
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage")
+                        </div>
+                        <div class="profile-usertitle-job">
+                            Laborbereich
+                        </div>
+                    </div>
+
+                    @{ Html.RenderAction("ShowVacationSummary", "Manage");}
+
+               
+                    </div>
+
+
+                        <div class="col-md-9">
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div></div>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                   
+                                @RenderBody()
+                                <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                <h4 class="modal-title custom_align" id="Heading">Urlaubsantrag bearbeiten</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer ">
+                                            <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                            <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+                                        </div>
+                                        <div class="modal-footer ">
+                                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                           @{ Html.RenderAction("Create", "VacationRequests", new VacationManagement.VacationRequest()); }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /#page-content-wrapper -->
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Studentisches Projekt</p>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

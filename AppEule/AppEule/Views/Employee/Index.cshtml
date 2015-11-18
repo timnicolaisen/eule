@@ -1,0 +1,89 @@
+﻿@model System.Collections.Generic.IEnumerable<VacationManagement.Employee>
+
+@{
+    ViewBag.Title = "Mitarbeiter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using TestAjax.Helpers
+
+
+<div class="page-header">
+    <h2>Datenbanken</h2>
+</div>
+
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+        @Html.NoEncodeActionLink("<span class=''>Testdatenbank laden</span>", "Testdatenbank laden", "ResetDB", "Employee", htmlAttributes: new { @class = "btn btn-default" })
+        
+  
+    </div>
+    <div class="btn-group" role="group">
+        @Html.NoEncodeActionLink("<span class=''>Datenbank zurücksetzen</span>", "Datenbank zurücksetzen", "ResetToDefaultDB", "Employee", htmlAttributes: new { @class = "btn btn-default" })
+  
+    </div>
+    <div class="btn-group" role="group">
+        @Html.NoEncodeActionLink("<span class=''>Vorführdatenbank laden</span>", "Vorführdatenbank laden", "ResetDemoDB", "Employee", htmlAttributes: new { @class = "btn btn-default" })
+  
+    </div>
+</div>
+
+<div class="page-header">
+    <h2>Mitarbeiter</h2>
+</div>
+
+<div class="pull-right">
+    @Html.ActionLink("Mitarbeiter hinzufügen", "Register", "Account")
+
+</div>
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th></th>
+    
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID })
+        </td>
+    </tr>
+}
+
+</table>

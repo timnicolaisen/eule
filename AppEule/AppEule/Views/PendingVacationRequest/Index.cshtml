@@ -1,0 +1,67 @@
+﻿@using System.Drawing
+@using TestAjax.Helpers
+@model System.Collections.Generic.IEnumerable<AppEule.Helpers.GUIManagement.PendingVacationRequestViewItem>
+@{
+    ViewBag.Title = "IndexForDivisionManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>IndexForDivisionManager</h2>
+<div class="table-responsive">
+
+
+    <table id="mytable" class="table table-bordred table-striped">
+
+        <thead>
+
+        <th>Zeitraum</th>
+        <th>Urlaubstage</th>
+        <th>Antragsteller</th>
+        <th>Schichtpartner</th>
+        <th>Status</th>
+        <th>Überschneidung</th>
+        <th>Sperre</th>
+        <th>Permit</th>
+        <th>Deny</th>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                
+                <tr>
+                    <td class="col-md-4">
+                        @Html.DisplayFor(modelItem => item.VacationStartDateViewString) - @Html.DisplayFor(modelItem => item.VacationEndDateViewString)
+                    </td>
+                    <td class="col-md-1">
+                        @Html.DisplayFor(modelItem => item.NetVacationDaysViewString)
+                    </td>
+                    <td class="col-md-1">
+                        @Html.DisplayFor(modelItem => item.RequesterFullName)
+                    </td>
+                    <td class="col-md-1">
+                        @Html.DisplayFor(modelItem => item.ShiftPartnerFullName)
+                    </td>
+                    <td class="col-md-3">
+                        @Html.DisplayFor(modelItem => item.VacationRequestProcessingStateViewString)
+                    </td>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(modelItem=>item.VacationPeriodOverlapNote)
+                    </td>
+                    <td>
+                        Sperre?
+                    </td>
+                    <td class="col-md-1">           
+                            @Html.ActionLink("Befürworten", "Permit", "PendingVacationRequest", new{id=item.VacationRequestID.ToString()}, null)
+                    </td>
+
+                    <td class="col-md-1">
+                       @Html.ActionLink("Ablehnen", "Reject", "PendingVacationRequest", new { id = item.VacationRequestID.ToString() }, null)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

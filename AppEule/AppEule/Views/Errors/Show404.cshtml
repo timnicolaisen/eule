@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Show404</title>
+    <style>
+        a, a:visited {
+            color: dodgerblue;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        a:hover, a:active {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+    <body>
+        <center>
+            <div>
+                <img src="~/Content/images/logo_start.png"/>
+            </div>
+            <div>
+                <h1>Oops, 404</h1>
+                <h3>Leider kann die Seite nicht gefunden werden :(</h3>
+                <a href="#" onclick="history.back()">
+                    &laquo; Zurück gehen
+                </a>
+            </div>
+        </center>
+    </body>
+</html>

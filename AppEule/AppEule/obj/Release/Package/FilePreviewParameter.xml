@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Default Web Site/eule" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\EuleApp\\AppEule\\AppEule\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\EuleApp\\AppEule\\AppEule\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=141.56.139.27\EULE;Initial Catalog=EULE_ASP;Persist Security Info=True;User ID=eule_connect;Password=eulehtwddseII;MultipleActiveResultSets=True" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\EuleApp\\AppEule\\AppEule\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="TestDatabase-Web.config Connection String" description="TestDatabase Connection String used in web.config by the application to access the database." value="data source=141.56.139.27\EULE;initial catalog=EULE_ASP;persist security info=True;user id=eule_connect;password=eulehtwddseII;MultipleActiveResultSets=True;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\EuleApp\\AppEule\\AppEule\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='TestDatabase']/@connectionString" />
+  </parameter>
+</parameters>

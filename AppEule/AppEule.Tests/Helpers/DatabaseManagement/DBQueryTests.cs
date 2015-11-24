@@ -23,7 +23,7 @@ namespace DatabaseManagement.Tests
     public class DBQueryTests
     {
         public const string sqlConnectionString =
-            "data source=141.56.139.27\\EULE;initial catalog=EULE_TEST;user id=eule_connect;password=eulehtwddseII;MultipleActiveResultSets=True;App=EntityFramework";
+            "Data Source=v22015112828829481.yourvserver.net;Initial Catalog=EULE_ASP;Persist Security Info=True;User ID=sa;Password=Ti#2#7#m";
 
         public const string SUBMITTED = "offen";
         public const string AGREED = "zugestimmt";
@@ -1210,7 +1210,57 @@ MegaListeDB.Add(MegaListeDB1);
                 Result = false;
             }
             Assert.AreEqual(true, Result);
-         } 
+         }
+
+
+        [TestMethod()]
+        public void SelectShiftGroupOfDivision()
+        {
+            bool Result = false;
+            string EmployeeID01tmp = "c";
+            string EmployeeID02tmp = "c";
+            int ShiftGroupIDtmp = 0;
+
+
+            var ShiftList = new List<ShiftGroup>();
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "SELECT * FROM dbo.ShiftGroup";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if the reader has any rows at all before starting to read.
+                        if (reader.HasRows)
+                        {
+                            // Read advances to the next row.
+                            while (reader.Read())
+                            {
+                                // Save DB-Return into variables
+                                // wihout Role and StaffID
+                                ShiftGroupIDtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
+                                EmployeeID01tmp = reader.GetString(reader.GetOrdinal("EmployeeID01"));
+                                EmployeeID02tmp = reader.GetString(reader.GetOrdinal("EmployeeID02"));
+
+
+                                ShiftGroup DivShiftgroup = new ShiftGroup(ShiftGroupIDtmp, EmployeeID01tmp, EmployeeID02tmp);
+
+                                ShiftList.Add(DivShiftgroup);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+            Assert.AreEqual(true, Result);
+        }
+
     }
+
+    
 }
 

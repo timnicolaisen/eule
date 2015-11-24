@@ -154,6 +154,12 @@ C:\eule\AppEule\AppEule\bin\de\Microsoft.Owin.Security.Facebook.resources.dll
 C:\eule\AppEule\AppEule\bin\de\Microsoft.Owin.Security.Google.resources.dll
 C:\eule\AppEule\AppEule\bin\de\Microsoft.Owin.Security.Twitter.resources.dll
 C:\eule\AppEule\AppEule\bin\de\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-C:\eule\AppEule\AppEule\obj\Debug\AppEule.csprojResolveAssemblyReference.cache
 C:\eule\AppEule\AppEule\obj\Debug\AppEule.dll
 C:\eule\AppEule\AppEule\obj\Debug\AppEule.pdb
+C:\eule\AppEule\AppEule\bin\System.Net.Http.Formatting.dll
+C:\eule\AppEule\AppEule\bin\System.Web.Http.dll
+C:\eule\AppEule\AppEule\bin\System.Web.Http.WebHost.dll
+C:\eule\AppEule\AppEule\bin\System.Net.Http.Formatting.xml
+C:\eule\AppEule\AppEule\bin\System.Web.Http.xml
+C:\eule\AppEule\AppEule\bin\System.Web.Http.WebHost.xml
+C:\eule\AppEule\AppEule\obj\Debug\AppEule.csprojResolveAssemblyReference.cache

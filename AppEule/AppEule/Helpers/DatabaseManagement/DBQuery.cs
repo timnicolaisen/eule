@@ -1643,8 +1643,8 @@ namespace DatabaseManagement
                             {
                                 // Save DB-Return into variables
                                 // wihout Role and StaffID
-                                EmployeeID01tmp = reader.GetString(reader.GetOrdinal("Id"));
-                                EmployeeID02tmp = reader.GetString(reader.GetOrdinal("Username"));
+                                EmployeeID01tmp = reader.GetString(reader.GetOrdinal("EmployeeID01"));
+                                EmployeeID02tmp = reader.GetString(reader.GetOrdinal("EmployeeID02"));
                                 ShiftGroupIDtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
 
                                 ShiftGroup DivShiftgroup = new ShiftGroup(ShiftGroupIDtmp, EmployeeID01tmp, EmployeeID02tmp);

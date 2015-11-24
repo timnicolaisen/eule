@@ -3,30 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AppEule.Models;
+using DatabaseManagement;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using VacationManagement;
+
 
 namespace AppEule.Controllers
 {
-    public class ShiftgroupController : Controller
+    public class ShiftGroupController : Controller
     {
-        // GET: Shiftgroup
+        private DBQuery _dbq = new DBQuery();
+        // GET: ShiftGroup
         public ActionResult Index()
         {
-            return View();
+            
+            List<ShiftGroup> resultList = _dbq.SelectShiftGroupOfDivision();
+
+            return View(resultList);
         }
 
-        // GET: Shiftgroup/Details/5
+        // GET: ShiftGroup/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Shiftgroup/Create
+        // GET: ShiftGroup/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Shiftgroup/Create
+        // POST: ShiftGroup/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -42,13 +52,13 @@ namespace AppEule.Controllers
             }
         }
 
-        // GET: Shiftgroup/Edit/5
+        // GET: ShiftGroup/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Shiftgroup/Edit/5
+        // POST: ShiftGroup/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -64,13 +74,13 @@ namespace AppEule.Controllers
             }
         }
 
-        // GET: Shiftgroup/Delete/5
+        // GET: ShiftGroup/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Shiftgroup/Delete/5
+        // POST: ShiftGroup/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

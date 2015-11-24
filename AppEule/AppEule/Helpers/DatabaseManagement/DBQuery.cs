@@ -1616,6 +1616,60 @@ namespace DatabaseManagement
             }
             return Result;
         }
+
+        public List<ShiftGroup> SelectShiftGroupOfDivision()
+        {
+            string EmployeeID01tmp = "c";
+            string EmployeeID02tmp = "c";
+            int ShiftGroupIDtmp = 0;
+            
+
+            var ShiftList = new List<ShiftGroup>();
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "SELECT * FROM dbo.ShiftGroup";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if the reader has any rows at all before starting to read.
+                        if (reader.HasRows)
+                        {
+                            // Read advances to the next row.
+                            while (reader.Read())
+                            {
+                                // Save DB-Return into variables
+                                // wihout Role and StaffID
+                                EmployeeID01tmp = reader.GetString(reader.GetOrdinal("EmployeeID01"));
+                                EmployeeID02tmp = reader.GetString(reader.GetOrdinal("EmployeeID02"));
+                                ShiftGroupIDtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
+
+                                ShiftGroup DivShiftgroup = new ShiftGroup(ShiftGroupIDtmp, EmployeeID01tmp, EmployeeID02tmp);
+
+                                ShiftList.Add(DivShiftgroup);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+            return ShiftList;
+        }
+
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         /// resets db to initial test data
         /// </summary>

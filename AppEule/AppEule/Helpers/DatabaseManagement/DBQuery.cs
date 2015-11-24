@@ -10,6 +10,7 @@ using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Web.Configuration;
 using System.Xml.Linq;
 using Antlr.Runtime.Tree;
+using System.Configuration;
 
 namespace DatabaseManagement
 {
@@ -22,7 +23,7 @@ namespace DatabaseManagement
 
     public class DBQuery
     {
-        public const string sqlConnectionString = "data source=141.56.139.27\\EULE;initial catalog=EULE_ASP;user id=eule_connect;password=eulehtwddseII;MultipleActiveResultSets=True;App=EntityFramework";
+        private readonly string sqlConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         public const string SUBMITTED = "offen";
         public const string AGREED = "zugestimmt";
         public const string PERMITTED = "befürwortet";

@@ -38,6 +38,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\AppEule.XML</DocumentationFile>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="Azure" Order="1" xmlns="">
+          <Destination Path="Data Source=bewmxcsspy.database.windows.net%3bInitial Catalog=EULE_ASP%3bPersist Security Info=True%3bUser ID=tim.nicolaisen%3bPassword=Ti#2#7#m" />
+        </ObjectGroup>
+        <ObjectGroup Name="NewConnection1-Deployment" Order="2" xmlns="">
+          <Destination Path="" />
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -184,6 +194,7 @@
     <Compile Include="Controllers\PendingVacationRequestsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SendMailerController.cs" />
+    <Compile Include="Controllers\ShiftgroupController.cs" />
     <Compile Include="Controllers\VacationReplacementRequestsController.cs" />
     <Compile Include="Controllers\VacationRequestsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -236,6 +247,9 @@
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\dd.pubxml" />
+    <None Include="Properties\PublishProfiles\eule-dev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\eule-dev - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Tim.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -249,7 +263,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -321,6 +337,7 @@
     <Folder Include="Content\themes\base\images\" />
     <Folder Include="Content\themes\base\minified\images\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Shiftgroup\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

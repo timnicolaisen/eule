@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="data source=141.56.139.27\EULE;initial catalog=EULE_ASP;persist security info=True;user id=eule_connect;password=eulehtwddseII;MultipleActiveResultSets=True;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\EuleApp\\AppEule\\AppEule\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
-  </parameter>
-  <parameter name="TestDatabase-Web.config Connection String" description="TestDatabase Connection String used in web.config by the application to access the database." defaultValue="data source=141.56.139.27\EULE;initial catalog=EULE_ASP;persist security info=True;user id=eule_connect;password=eulehtwddseII;MultipleActiveResultSets=True;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\EuleApp\\AppEule\\AppEule\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='TestDatabase']/@connectionString" />
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=eu-cdbr-azure-west-c.cloudapp.net;Initial Catalog=dev_db;Persist Security Info=True;User ID=bada818292ca16;Password=718e39cb" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\eule\\AppEule\\AppEule\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
   </parameter>
 </parameters>

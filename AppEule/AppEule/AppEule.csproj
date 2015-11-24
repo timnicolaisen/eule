@@ -210,6 +210,7 @@
     <Compile Include="Helpers\VacationManagement\Employee.cs" />
     <Compile Include="Helpers\GUIManagement\EmployeeVacationRequestViewItem.cs" />
     <Compile Include="Helpers\VacationManagement\ErrorState.cs" />
+    <Compile Include="Helpers\VacationManagement\ShiftGroup.cs" />
     <Compile Include="Helpers\VacationManagement\TimePeriodOverlapCheck.cs" />
     <Compile Include="Helpers\GUIManagement\VacationReplacementRequestViewItem.cs" />
     <Compile Include="Helpers\VacationManagement\VacationRequest.cs" />

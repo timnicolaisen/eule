@@ -39,7 +39,5 @@ namespace AppEule.Models
         {
             return new ApplicationDbContext();
         }
-
-        public System.Data.Entity.DbSet<VacationManagement.ShiftGroup> ShiftGroups { get; set; }
     }
 }

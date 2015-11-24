@@ -3,25 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AppEule.Models;
-using DatabaseManagement;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using VacationManagement;
 
 namespace AppEule.Controllers
 {
     public class ShiftGroupController : Controller
     {
-        private DBQuery _dbq = new DBQuery();
-       
-         [HandleError()]
+        // GET: ShiftGroup
         public ActionResult Index()
         {
-            List<ShiftGroup> resultList = _dbq.SelectShiftGroupOfDivision();
-            return View(resultList);
+            return View();
         }
-
 
         // GET: ShiftGroup/Details/5
         public ActionResult Details(int id)

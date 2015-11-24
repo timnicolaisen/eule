@@ -332,13 +332,13 @@
     <Content Include="Views\Manage\ShowVacationSummary.cshtml" />
     <Content Include="Views\VacationRequests\All.cshtml" />
     <Content Include="Views\Errors\Show404.cshtml" />
+    <Content Include="Views\Shiftgroup\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\base\images\" />
     <Folder Include="Content\themes\base\minified\images\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Shiftgroup\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

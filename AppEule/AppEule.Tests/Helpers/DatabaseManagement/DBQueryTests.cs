@@ -23,7 +23,7 @@ namespace DatabaseManagement.Tests
     public class DBQueryTests
     {
         public const string sqlConnectionString =
-            "data source=141.56.139.27\\EULE;initial catalog=EULE_TEST;user id=eule_connect;password=eulehtwddseII;MultipleActiveResultSets=True;App=EntityFramework";
+            "Data Source=v22015112828829481.yourvserver.net;Initial Catalog=EULE_ASP;Persist Security Info=True;User ID=sa;Password=Ti#2#7#m";
 
         public const string SUBMITTED = "offen";
         public const string AGREED = "zugestimmt";
@@ -1210,7 +1210,41 @@ MegaListeDB.Add(MegaListeDB1);
                 Result = false;
             }
             Assert.AreEqual(true, Result);
-         } 
+         }
+
+        [TestMethod()]
+         public void InsertNewShiftgroup()
+         {
+            ShiftGroup ShiftGroup = new VacationManagement.ShiftGroup("bff0f95a-5b1a-42cc-a1cc-8f520477c37a","d2dd4ad0-7c53-497e-aa5e-d9d09132076b");
+            bool Result = false;
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "INSERT INTO [dbo].[Shiftgroup] VALUES (@EmployeeID01, @EmployeeID02)";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeID01", ShiftGroup.getEmployeeID01());
+                    cmd.Parameters.AddWithValue("EmployeeID02", ShiftGroup.getEmployeeID02());
+                   
+
+                    try
+                    {
+                        connection.Open();
+                        cmd.ExecuteNonQuery();//insert/delete/update is nonQuery
+                        Result = true;
+                    }
+                    catch (SqlException e) //if Failure in Database then Result = false
+                    {
+                        {
+                            Result = false;
+                        }
+                    }
+                }
+            }
+            Assert.AreEqual(true, Result);
+        }
     }
+
+   
 }
 

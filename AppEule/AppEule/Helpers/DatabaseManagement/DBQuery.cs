@@ -1661,8 +1661,35 @@ namespace DatabaseManagement
         }
 
 
+        public Boolean InsertNewShiftgroup(ShiftGroup Shiftgroup)
+        {
+            bool Result = false;
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "INSERT INTO [dbo].[Shiftgroup] VALUES (@EmployeeID01, @EmployeeID02)";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeID01", Shiftgroup.getEmployeeID01());
+                    cmd.Parameters.AddWithValue("EmployeeID02", Shiftgroup.getEmployeeID02());
 
-
+                    try
+                    {
+                        connection.Open();
+                        cmd.ExecuteNonQuery();//insert/delete/update is nonQuery
+                        Result = true;
+                    }
+                    catch (SqlException e) //if Failure in Database then Result = false
+                    {
+                        {
+                            Result = false;
+                        }
+                    }
+                }
+            }
+            return Result;
+        }
+        
 
 
 

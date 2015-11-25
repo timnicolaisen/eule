@@ -38,11 +38,14 @@ namespace AppEule.Controllers
 
         // POST: ShiftGroup/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ShiftGroup ShiftGroup)
         {
             try
             {
-                // TODO: Add insert logic here
+               ShiftGroup Shiftgroup = new VacationManagement.ShiftGroup("223423423423423434", "234234234234234");
+               _dbq.InsertNewShiftgroup(ShiftGroup);
+                
 
                 return RedirectToAction("Index");
             }

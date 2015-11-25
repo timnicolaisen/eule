@@ -43,7 +43,7 @@ namespace AppEule.Controllers
         {
             try
             {
-               ShiftGroup Shiftgroup = new VacationManagement.ShiftGroup("223423423423423434", "234234234234234");
+               
                _dbq.InsertNewShiftgroup(ShiftGroup);
                 
 

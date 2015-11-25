@@ -65,8 +65,8 @@ namespace VacationManagement
 
         public ShiftGroup()
         { //without Role and StaffID!
-            _employeeID01 = "Default1";
-            _employeeID02 = "Default2";
+            _employeeID01 = "Default";
+            _employeeID02 = "Default";
         }
        
     }

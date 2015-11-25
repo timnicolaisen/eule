@@ -333,6 +333,7 @@
     <Content Include="Views\VacationRequests\All.cshtml" />
     <Content Include="Views\Errors\Show404.cshtml" />
     <Content Include="Views\Shiftgroup\Index.cshtml" />
+    <Content Include="Views\Shiftgroup\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

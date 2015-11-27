@@ -251,6 +251,7 @@
     <None Include="Properties\PublishProfiles\dd.pubxml" />
     <None Include="Properties\PublishProfiles\eule-dev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\eule-dev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\Package.pubxml" />
     <None Include="Properties\PublishProfiles\Tim.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

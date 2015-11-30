@@ -20,6 +20,7 @@ namespace DatabaseManagement
     using System.Text;
     using VacationManagement;
     using System.Data.SqlClient;
+    using GUIManagement;
 
     public class DBQuery
     {
@@ -882,60 +883,70 @@ namespace DatabaseManagement
             }
         }
 
-        public Employee SelectEmployeebyId(string id)
+        public EmployeeDetailsViewItem SelectEmployeebyDetailsById(string id)
         {
-            Employee emp;
+            EmployeeDetailsViewItem emp;
             string Idtmp = "";
             string Usernametmp = "";
-            string PasswordHashtmp = "";
             string FirstNametmp = "";
             string LastNametmp = "";
             string Emailtmp = "";
+            string RoleName = "";
+            string ShiftGroupPartnerName = "";
+            string DivisonName = "";
             int ShiftGroupIDtmp = 0;
             int DivisionIDtmp = 0;
+
             using (SqlConnection connection = new SqlConnection(sqlConnectionString))
             {
                 string sqlStatement =
-                    "SELECT * FROM dbo.AspNetUsers WHERE Id='" + id + "'";
+                    "SELECT [Id], [UserName], [FirstName], [LastName], [Email], [ShiftGroupID], [DivisionID] FROM dbo.AspNetUsers WHERE Id='" + id + "'";
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
                 {
+                    cmd.Parameters.AddWithValue("EmployeeID", id);
                     connection.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         // Check if the reader has any rows at all before starting to read.
                         if (reader.HasRows)
                         {
-                            // Read advances to the next row.
 
-                            // Save DB-Return into variables
-                            // wihout Role and StaffID
-                            Idtmp = reader.GetString(reader.GetOrdinal("Id"));
-                            Usernametmp = reader.GetString(reader.GetOrdinal("Username"));
-                            PasswordHashtmp = reader.GetString(reader.GetOrdinal("PasswordHash"));
-                            FirstNametmp = reader.GetString(reader.GetOrdinal("FirstName"));
-                            LastNametmp = reader.GetString(reader.GetOrdinal("LastName"));
-                            Emailtmp = reader.GetString(reader.GetOrdinal("Email"));
-                            if (reader.IsDBNull(reader.GetOrdinal("ShiftGroupID")))
+                            while (reader.Read())
+                            {
+                                Usernametmp = reader.GetString(reader.GetOrdinal("UserName"));
+                                FirstNametmp = reader.GetString(reader.GetOrdinal("FirstName"));
+                                LastNametmp = reader.GetString(reader.GetOrdinal("LastName"));
+                                Emailtmp = reader.GetString(reader.GetOrdinal("Email"));
+
+                                if (reader.IsDBNull(reader.GetOrdinal("ShiftGroupID")))
                                 //Test, ob ID NULL, wenn ja ID = 0
-                            {
-                                ShiftGroupIDtmp = 0;
+                                {
+                                    ShiftGroupIDtmp = 0;
+                                }
+                                else
+                                {
+                                    ShiftGroupIDtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
+                                }
+
+
+
+                                RoleName = SelectRole(id);
+                                ShiftGroupPartnerName = SelectShiftPartner(id);
+
+
+                                DivisionIDtmp = reader.GetInt32(reader.GetOrdinal("DivisionID"));
+                                emp = new EmployeeDetailsViewItem(Idtmp, Usernametmp, FirstNametmp,
+                                    LastNametmp, Emailtmp, RoleName, ShiftGroupPartnerName, "");
+                                return emp;
                             }
-                            else
-                            {
-                                ShiftGroupIDtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
-                            }
-                            DivisionIDtmp = reader.GetInt32(reader.GetOrdinal("DivisionID"));
-                            emp = new Employee(Idtmp, Usernametmp, PasswordHashtmp, FirstNametmp,
-                                LastNametmp, Emailtmp, ShiftGroupIDtmp, DivisionIDtmp);
-                            return emp;
                         }
                         else
                         {
                             return null;
                         }
-
+                   
                     }
-
+                    return null;
                 }
             }
         }

@@ -79,19 +79,20 @@ namespace VacationManagement
             return _firstName + " " + _lastName;
         }
 
-        public Employee(String EmployeeID, String LoginName, String LoginPassword, String FirstName, String LastName, String EmailAddress, int StaffID, String Role, int ShiftGroupID, int DivisionID)
+        public Employee(String EmployeeID, String LoginName, String FirstName, String LastName, String EmailAddress, int ShiftGroupID, int DivisionID)
         {
             _employeeID = EmployeeID;
             _loginName = LoginName;
-            _loginPassword = LoginPassword;
             _lastName = LastName;
             _firstName = FirstName;
             _emailAddress = EmailAddress;
-            _staffID = StaffID;
-            _role = Role;
             _shiftGroupID = ShiftGroupID;
             _divisionID = DivisionID;
         }
+
+
+
+
         public Employee(String EmployeeID, String LoginName, String LoginPassword, String FirstName, String LastName, String EmailAddress, int ShiftGroupID, int DivisionID)
         { //without Role and StaffID!
             _employeeID = EmployeeID;

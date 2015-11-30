@@ -12,6 +12,7 @@ using DatabaseManagement;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using VacationManagement;
+using GUIManagement;
 
 namespace AppEule.Controllers
 {
@@ -41,7 +42,22 @@ namespace AppEule.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee emp = _dbq.SelectEmployeebyId(id);
+            EmployeeDetailsViewItem emp = _dbq.SelectEmployeebyDetailsById(id);
+            if (emp == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(emp);
+        }
+
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EmployeeDetailsViewItem emp = _dbq.SelectEmployeebyDetailsById(id);
             if (emp == null)
             {
                 return HttpNotFound();

@@ -56,6 +56,8 @@ namespace AppEule.Models
         [Display(Name = "Neues Kennwort bestätigen")]
         [Compare("NewPassword", ErrorMessage = "Das neue Kennwort stimmt nicht mit dem Bestätigungskennwort überein.")]
         public string ConfirmPassword { get; set; }
+
+        public ChangePasswordViewModel ChangePasswordModel { get; set; }
     }
 
     public class AddPhoneNumberViewModel

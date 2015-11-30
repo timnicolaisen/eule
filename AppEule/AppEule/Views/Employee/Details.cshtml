@@ -92,17 +92,7 @@
                 </div>
             <div class="tab-pane fade" id="password">
                 <form id="tab2">
-                    <label>Old Password</label>
-                    <input type="password" class="input-xlarge" name="oldpass">
-                    <label>New Password</label>
-                    <input type="password" class="input-xlarge" name="newpass">
-                    <label>Confirm Password</label>
-                    <input type="password" class="input-xlarge" name="confirmpass">
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
-                        </div>
-                    </div>
+                    @{ Html.RenderAction("SetPassword", "Manage");}
                 </form>
             </div>
             <div class="tab-pane fade" id="log">

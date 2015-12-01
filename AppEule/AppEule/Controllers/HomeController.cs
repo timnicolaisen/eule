@@ -11,7 +11,14 @@ namespace AppEule.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Login", "Account");
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("RoleView", "VacationRequests");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
       

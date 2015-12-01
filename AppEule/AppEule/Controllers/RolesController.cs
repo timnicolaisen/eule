@@ -17,7 +17,7 @@ namespace AppEule.Controllers
     public class RolesController : BaseController
     {
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext context = new ApplicationDbContext();
+        private ApplicationDbContext context = new ApplicationDbContext(); 
 
         public ActionResult Index()
         {

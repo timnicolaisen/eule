@@ -53,7 +53,7 @@ namespace AppEule.Controllers
             return View(emp);
         }
 
-        public ActionResult Details(string id)
+        public ActionResult Details(string id) 
         {
             if (id == null)
             {

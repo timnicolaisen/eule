@@ -23,6 +23,8 @@ namespace AppEule.Controllers
     public class EmployeeController : BaseController
     {
         private DBQuery _dbq = new DBQuery();
+        private ApplicationUserManager _userManager;
+        private ApplicationDbContext context = new ApplicationDbContext();
 
         // GET: Employee
         public ActionResult Index()
@@ -57,6 +59,9 @@ namespace AppEule.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            ViewBag.Roles = list;
+
             EmployeeDetailsViewItem emp = _dbq.SelectEmployeebyDetailsById(id);
             if (emp == null)
             {

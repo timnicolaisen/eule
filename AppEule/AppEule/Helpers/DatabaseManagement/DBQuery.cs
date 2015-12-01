@@ -11,6 +11,7 @@ using System.Web.Configuration;
 using System.Xml.Linq;
 using Antlr.Runtime.Tree;
 using System.Configuration;
+using System.Web.Mvc;
 
 namespace DatabaseManagement
 {
@@ -883,6 +884,46 @@ namespace DatabaseManagement
             }
         }
 
+        public List<SelectListItem> SelectListOfAllEmployees()
+        {
+            string Idtmp = "";
+            string Usernametmp = "";
+            string FullName = "";
+
+            var empList = new List<SelectListItem>();
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "SELECT Id, Username FROM dbo.AspNetUsers";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if the reader has any rows at all before starting to read.
+                        if (reader.HasRows)
+                        {
+                            // Read advances to the next row.
+                            while (reader.Read())
+                            {
+                                // Save DB-Return into variables
+                                // wihout Role and StaffID
+                                Idtmp = reader.GetString(reader.GetOrdinal("Id"));
+                                Usernametmp = reader.GetString(reader.GetOrdinal("Username"));
+                                FullName = SelectEmployeeFullName(Idtmp);
+                                empList.Add(new SelectListItem { Text = FullName, Value = Idtmp });
+                                
+                               
+                            }
+                        }
+
+                    }
+
+                }
+                return empList;
+            }
+        }
+
         public EmployeeDetailsViewItem SelectEmployeebyDetailsById(string id)
         {
             EmployeeDetailsViewItem emp;
@@ -1443,6 +1484,8 @@ namespace DatabaseManagement
             }
             return Role;
         }
+
+       
 
         /// <summary>
         /// inserts the role for one Employee, Employee need to exist !

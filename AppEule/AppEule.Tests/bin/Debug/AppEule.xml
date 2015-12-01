@@ -4,11 +4,6 @@
         <name>AppEule</name>
     </assembly>
     <members>
-        <member name="T:GUIManagement.AccountController">
-            <summary>
-            The AccountController stays for all the actions connected with personal account management, e.g. Login and Registration
-            </summary>
-        </member>
         <member name="T:AppEule.Controllers.BaseController">
             <summary>
             This controller is used only to override the OnException method. Is a parent-class for all the controllers 
@@ -58,6 +53,11 @@
         <member name="T:AppEule.Controllers.SendMailerController">
             <summary>
             The controller for sending email notifications
+            </summary>
+        </member>
+        <member name="T:GUIManagement.AccountController">
+            <summary>
+            The AccountController stays for all the actions connected with personal account management, e.g. Login and Registration
             </summary>
         </member>
         <member name="T:GUIManagement.VacationReplacementRequestsController">

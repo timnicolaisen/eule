@@ -62,6 +62,9 @@ namespace AppEule.Controllers
             var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
 
+            var ListOfAllEmployee = _dbq.SelectListOfAllEmployees();
+            ViewBag.Employee = ListOfAllEmployee;
+
             EmployeeDetailsViewItem emp = _dbq.SelectEmployeebyDetailsById(id);
             if (emp == null)
             {

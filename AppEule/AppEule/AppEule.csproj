@@ -28,6 +28,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -205,6 +206,7 @@
     <Compile Include="Helpers\GUIManagement\AllVacationRequestViewItem.cs" />
     <Compile Include="Helpers\GUIManagement\EmployeeDetailsViewItem.cs" />
     <Compile Include="Helpers\GUIManagement\PendingVacationRequestViewItem.cs" />
+    <Compile Include="Helpers\GUIManagement\RolesViewItem.cs" />
     <Compile Include="Helpers\GUIManagement\VacationEntitlementViewItem.cs" />
     <Compile Include="Helpers\GUIManagement\VacationRequestProcessingStateConverter.cs" />
     <Compile Include="Helpers\mvc\MVCHelper.cs" />
@@ -250,6 +252,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\Azure - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\EULE-HTW - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\EULE-HTW - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Package.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

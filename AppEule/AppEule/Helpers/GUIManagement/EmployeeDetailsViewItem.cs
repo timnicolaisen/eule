@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace GUIManagement
 {
-
+    using System.Collections.Generic;
     using VacationManagement;
 
     public class EmployeeDetailsViewItem
@@ -18,9 +18,10 @@ namespace GUIManagement
         protected string _roleName = "";
         protected string _shiftGroupPartnerName = "";
         protected string _divisonName = "";
-       
+        protected List<SelectListItem> items = null;
 
-      
+
+
 
         [DisplayName("Mitarbeiter ID")]
         public string UserId

@@ -1,16 +1,15 @@
 ﻿@model GUIManagement.EmployeeDetailsViewItem
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";  
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Mitarbeiter Information</h2>
 
 <p>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+
+   
 
     <div class="">
         
@@ -25,6 +24,8 @@
                 <img class="img-circle" src=""></img>
                 <br />
                 <br />
+@using (Html.BeginForm())
+{
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="col-md-2">
@@ -67,7 +68,7 @@
                             @Html.DisplayNameFor(model => model.ShiftGroupPartnerName)
                         </div>
                         <div class="col-md-9">
-                            @Html.DropDownList("Mitarbeiter", (IEnumerable<SelectListItem>)ViewBag.Employee, "Kein Schichtpartner", new { @class = "form-control dropdown-toggle" })
+                            @Html.DropDownListFor(model => model.ShiftGroupPartnerName, (IEnumerable<SelectListItem>)ViewBag.Employee, "Kein Schichtpartner", new { @class = "form-control dropdown-toggle" })
                         </div>
                     </div>
 
@@ -90,6 +91,7 @@
                     </div>
                 </div>
 </div>
+}
 
 
                 </div>
@@ -104,7 +106,7 @@
         </div>
     </div>
 
-}
+
 
         @Html.ActionLink("Zurueck zur Mitarbeiterliste", "Index")
 </p>

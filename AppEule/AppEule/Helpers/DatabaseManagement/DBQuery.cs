@@ -13,6 +13,7 @@ using Antlr.Runtime.Tree;
 using System.Configuration;
 using System.Web.Mvc;
 
+
 namespace DatabaseManagement
 {
     using System;
@@ -35,6 +36,12 @@ namespace DatabaseManagement
         public const string CANCELED = "storniert";
         public const string TAKEN = "genommen";
 
+
+
+        public string getConectionString()
+        {
+            return sqlConnectionString;
+        }
         /// <summary>
         /// selects a number of all Holidays between the VacationRequest' StartDate and EndDate that are workdays and not a Saturday/Sunday 
         /// </summary>

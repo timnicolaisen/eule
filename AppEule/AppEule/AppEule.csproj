@@ -203,6 +203,7 @@
     </Compile>
     <Compile Include="Helpers\CommunicationManagement\EmailService.cs" />
     <Compile Include="Helpers\DatabaseManagement\DBQuery.cs" />
+    <Compile Include="Helpers\DatabaseManagement\Employee.cs" />
     <Compile Include="Helpers\GUIManagement\AllVacationRequestViewItem.cs" />
     <Compile Include="Helpers\GUIManagement\EmployeeDetailsViewItem.cs" />
     <Compile Include="Helpers\GUIManagement\PendingVacationRequestViewItem.cs" />

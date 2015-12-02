@@ -67,8 +67,7 @@
                             @Html.DisplayNameFor(model => model.ShiftGroupPartnerName)
                         </div>
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.ShiftGroupPartnerName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.ShiftGroupPartnerName, "", new { @class = "text-danger" })
+                            @Html.DropDownList("Mitarbeiter", (IEnumerable<SelectListItem>)ViewBag.Employee, "Kein Schichtpartner", new { @class = "form-control dropdown-toggle" })
                         </div>
                     </div>
 
@@ -79,7 +78,7 @@
                         <div class="col-md-9">
                             <div class="dropdown">
                                 @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control dropdown-toggle" })
-
+                               
                             </div>
 
                         </div>

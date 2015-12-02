@@ -75,6 +75,27 @@ namespace AppEule.Controllers
         }
 
 
+        [HttpPost]
+      //  [ValidateAntiForgeryToken]
+        public ActionResult Details(EmployeeDetailsViewItem EmployeeDetails,  string id, string Roles, string Lastname, string LastName)
+        {
+            try
+            {
+                //context.Entry(Roles).State = System.Data.Entity.EntityState.Modified;
+                //context.SaveChanges();
+
+                ShiftGroup UpdateShiftGroup = new ShiftGroup(EmployeeDetails.ShiftGroupPartnerName, id);
+                _dbq.InsertNewShiftgroup(UpdateShiftGroup);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
         public ActionResult ResetDB()
         {
             _dbq.ResetDB();

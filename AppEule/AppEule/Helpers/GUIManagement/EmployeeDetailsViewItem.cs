@@ -19,6 +19,8 @@ namespace GUIManagement
         protected string _shiftGroupPartnerName = "";
         protected string _divisonName = "";
         protected List<SelectListItem> items = null;
+        public IEnumerable<List<SelectListItem>> _listOfAllEmployee { get; set; }
+        public IEnumerable<SelectListItem> FullName { get; set; }
 
 
 
@@ -27,48 +29,56 @@ namespace GUIManagement
         public string UserId
         {
             get { return _id; }
+            set { _id = value; }
         }
 
         [DisplayName("Benutzername")]
         public string UserName
         {
             get { return _userName; }
+            set { _userName = value; }
         }
 
         [DisplayName("Vorname")]
         public string FirstName
         {
             get { return _firstName; }
+            set { _firstName = value; }
         }
 
         [DisplayName("Nachname")]
         public string LastName
         {
             get { return _lastName; }
+            set { _lastName = value; }
         }
 
         [DisplayName("E-Mail")]
         public string Email
         {
             get { return _email; }
+            set { _email = value; }
         }
 
         [DisplayName("Benutzerrolle")]
         public string RoleName
         {
             get { return _roleName; }
+            set { _roleName = value; }
         }
 
         [DisplayName("Schichtgruppenpartner")]
         public string ShiftGroupPartnerName
         {
             get { return _shiftGroupPartnerName; }
+            set { _shiftGroupPartnerName = value; }
         }
 
         [DisplayName("Abteilung")]
         public string DivisonName
         {
             get { return _divisonName; }
+            set { _divisonName = value; }
         }
 
 
@@ -86,5 +96,10 @@ namespace GUIManagement
 
         }
 
-    }
+        public EmployeeDetailsViewItem()
+        {
+
+        }
+
+        }
 }

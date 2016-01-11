@@ -15,6 +15,7 @@
         
         <ul class="nav nav-tabs">
             <li class="active"><a href="#profile" data-toggle="tab">Stammdaten</a></li>
+            <li><a href="#entitlement" data-toggle="tab">Urlaubsanspruch</a></li>
             <li><a href="#password" data-toggle="tab">Passwort</a></li>
             <li><a href="#log" data-toggle="tab">Log</a></li>
         </ul>
@@ -24,77 +25,85 @@
                 <img class="img-circle" src=""></img>
                 <br />
                 <br />
-@using (Html.BeginForm())
-{
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            @Html.DisplayNameFor(model => model.FirstName)
-                        </div>
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            @Html.DisplayNameFor(model => model.LastName)
-                        </div>
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            @Html.DisplayNameFor(model => model.UserName)
-                        </div>
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            @Html.DisplayNameFor(model => model.Email)
-                        </div>
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            @Html.DisplayNameFor(model => model.ShiftGroupPartnerName)
-                        </div>
-                        <div class="col-md-9">
-                            @Html.DropDownListFor(model => model.ShiftGroupPartnerName, (IEnumerable<SelectListItem>)ViewBag.Employee, Model.ShiftGroupPartnerName, new { @class = "form-control dropdown-toggle" })
-                        </div>
-                    </div> 
-
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            @Html.DisplayNameFor(model => model.RoleName)
-                        </div>
-                        <div class="col-md-9">
-                            <div class="dropdown">
-                                @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control dropdown-toggle" })
-                               
+                @using (Html.BeginForm())
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.FirstName)
                             </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.UserName)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.Email)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.ShiftGroupPartnerName)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.ShiftGroupPartnerName, (IEnumerable<SelectListItem>)ViewBag.Employee, Model.ShiftGroupPartnerName, new { @class = "form-control dropdown-toggle" })
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.RoleName)
+                            </div>
+                            <div class="col-md-9">
+                                <div class="dropdown">
+                                    @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control dropdown-toggle" })
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="&#220;bernehmen" class="btn btn-primary" />
+                            </div>
                         </div>
                     </div>
-                   
-                    <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="&#220;bernehmen" class="btn btn-primary" />
-                    </div>
-                </div>
-</div>
-}
+                }
 
 
-                </div>
+            </div>
+            <div class="tab-pane fade" id="entitlement">
+            <form id="tab2">
+                <br />
+                <br />
+                @{ Html.RenderAction("Details", "vacationEntitlement");}
+                
+            </form>
+        </div>
             <div class="tab-pane fade" id="password">
                 <form id="tab2">
                     @{ Html.RenderAction("SetPassword", "Manage");}

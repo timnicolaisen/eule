@@ -314,6 +314,6 @@ D:\Workspace\eule\AppEule\AppEule\bin\de\Microsoft.Owin.Security.Facebook.resour
 D:\Workspace\eule\AppEule\AppEule\bin\de\Microsoft.Owin.Security.Google.resources.dll
 D:\Workspace\eule\AppEule\AppEule\bin\de\Microsoft.Owin.Security.Twitter.resources.dll
 D:\Workspace\eule\AppEule\AppEule\bin\de\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-D:\Workspace\eule\AppEule\AppEule\obj\Debug\AppEule.csprojResolveAssemblyReference.cache
 D:\Workspace\eule\AppEule\AppEule\obj\Debug\AppEule.dll
 D:\Workspace\eule\AppEule\AppEule\obj\Debug\AppEule.pdb
+D:\Workspace\eule\AppEule\AppEule\obj\Debug\AppEule.csprojResolveAssemblyReference.cache

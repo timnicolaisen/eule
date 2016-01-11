@@ -1878,14 +1878,171 @@ namespace DatabaseManagement
             return Result;
         }
 
+
+
+        public List<VacationEntitlementViewItem> SelectEntitlementsOfDivision()
+        {
+            String EmployeeID_tmp;
+            String EmployeeFullName_tmp;
+            int RemainingVacationDays_tmp;
+            int VacationDaysTotal_tmp;
+            int VacationDaysPreviousYear_tmp;
+
+
+
+        var VacationEntitlement = new List<VacationEntitlementViewItem>();
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    " SELECT * FROM dbo.VacationEntitlement";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                     
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if the reader has any rows at all before starting to read.
+                        if (reader.HasRows)
+                        {
+                            // Read advances to the next row.
+                            while (reader.Read())
+                            {
+                                // Save DB-Return into variables
+                                // wihout Role and StaffID
+                                EmployeeID_tmp = reader.GetString(reader.GetOrdinal("EmployeeID"));
+                                RemainingVacationDays_tmp = reader.GetInt32(reader.GetOrdinal("VacationDayRemaining"));
+                                VacationDaysTotal_tmp = reader.GetInt32(reader.GetOrdinal("VacationDaysTotal"));
+                                VacationDaysPreviousYear_tmp = reader.GetInt32(reader.GetOrdinal("VacationDaysPreviousYear"));
+
+
+                                EmployeeFullName_tmp = SelectEmployeeFullName(EmployeeID_tmp);
+
+
+                                VacationEntitlementViewItem DivVacationEntitlement = new VacationEntitlementViewItem(EmployeeID_tmp, RemainingVacationDays_tmp, VacationDaysTotal_tmp, VacationDaysPreviousYear_tmp, EmployeeFullName_tmp);
+
+                                VacationEntitlement.Add(DivVacationEntitlement);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+            return VacationEntitlement;
+        }
+
+        public VacationEntitlementViewItem SelectEntitlementsOfEmployee(String EmployeeId)
+        {
+            String EmployeeID_tmp;
+            String EmployeeFullName_tmp;
+            int RemainingVacationDays_tmp;
+            int VacationDaysTotal_tmp;
+            int VacationDaysPreviousYear_tmp;
+
+
+
+          
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "SELECT * FROM dbo.VacationEntitlement WHERE EmployeeID = @EmployeeId";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeId", EmployeeId);
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if the reader has any rows at all before starting to read.
+                        if (reader.HasRows)
+                        {
+                            // Read advances to the next row.
+                            while (reader.Read())
+                            {
+                                // Save DB-Return into variables
+                                // wihout Role and StaffID
+                                EmployeeID_tmp = reader.GetString(reader.GetOrdinal("EmployeeID"));
+                                RemainingVacationDays_tmp = reader.GetInt32(reader.GetOrdinal("VacationDayRemaining"));
+                                VacationDaysTotal_tmp = reader.GetInt32(reader.GetOrdinal("VacationDaysTotal"));
+                                VacationDaysPreviousYear_tmp = reader.GetInt32(reader.GetOrdinal("VacationDaysPreviousYear"));
+
+
+                                EmployeeFullName_tmp = SelectEmployeeFullName(EmployeeID_tmp);
+
+
+                                VacationEntitlementViewItem VacationEntitlement = new VacationEntitlementViewItem(EmployeeID_tmp, RemainingVacationDays_tmp, VacationDaysTotal_tmp, VacationDaysPreviousYear_tmp, EmployeeFullName_tmp);
+
+                                return VacationEntitlement;
+                            }
+                        }
+
+                    }
+                    return null;
+                }
+            }
+           
+        }
+
+
+        public Boolean UpdateEntitlementOfEmployee(VacationEntitlementViewItem VacationEntitlement)
+        {
+
+            int VacationDaysTotal_tmp = SelectVacationDaysTotal(VacationEntitlement.EmployeeID);
+            int VacationDayRemaining_tmp = SelectRemainingVacationDays(VacationEntitlement.EmployeeID);
+            
+            int UsedVacationDays = VacationDaysTotal_tmp - VacationDayRemaining_tmp;
+
+
+            VacationDayRemaining_tmp = VacationEntitlement.VacationDaysTotal - UsedVacationDays;
+            
+
+           
+
+            bool Result = false;
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    " UPDATE dbo.VacationEntitlement SET VacationDaysPreviousYear = @VacationDaysPreviousYear, VacationDaysTotal = @VacationDaysTotal, VacationDayRemaining = @VacationDaysRemaining WHERE Id = @EmployeeId";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+
+                
+
+                    cmd.Parameters.AddWithValue("VacationDaysPreviousYear", VacationEntitlement.VacationDaysPreviousYear);
+                    cmd.Parameters.AddWithValue("VacationDaysTotal", VacationEntitlement.VacationDaysPreviousYear + VacationEntitlement.VacationDaysCurYear);
+                    cmd.Parameters.AddWithValue("VacationDaysRemaining", VacationDayRemaining_tmp);
+                    cmd.Parameters.AddWithValue("EmployeeId", VacationEntitlement.EmployeeID);
+                    cmd.Parameters.AddWithValue("VacationDaysCurYear", VacationEntitlement.VacationDaysCurYear);
+
+                    try
+                    {
+
+                        connection.Open();
+                        cmd.ExecuteNonQuery();//insert/delete/update is nonQuery
+                        Result = true;
+                    }
+                    catch (SqlException e) //if Failure in Database then Result = false
+                    {
+                        {
+                            Result = false;
+                        }
+                    }
+                }
+            }
+            return Result;
+        }
+
+
+
         public List<ShiftGroup> SelectShiftGroupOfDivision()
         {
             string EmployeeID01tmp = "c";
             string EmployeeID02tmp = "c";
             int ShiftGroupIDtmp = 0;
-            
+            string EmployeeID01_FullName_tmp;
+            string EmployeeID02_FullName_tmp;
 
-            var ShiftList = new List<ShiftGroup>();
+
+        var ShiftList = new List<ShiftGroup>();
             using (SqlConnection connection = new SqlConnection(sqlConnectionString))
             {
                 string sqlStatement =
@@ -1908,7 +2065,10 @@ namespace DatabaseManagement
                                 EmployeeID02tmp = reader.GetString(reader.GetOrdinal("EmployeeID02"));
                                 ShiftGroupIDtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
 
-                                ShiftGroup DivShiftgroup = new ShiftGroup(ShiftGroupIDtmp, EmployeeID01tmp, EmployeeID02tmp);
+                                EmployeeID01_FullName_tmp = SelectEmployeeFullName(EmployeeID01tmp);
+                                EmployeeID02_FullName_tmp = SelectEmployeeFullName(EmployeeID02tmp);
+
+                                ShiftGroup DivShiftgroup = new ShiftGroup(ShiftGroupIDtmp, EmployeeID01tmp, EmployeeID02tmp, EmployeeID01_FullName_tmp, EmployeeID02_FullName_tmp);
 
                                 ShiftList.Add(DivShiftgroup);
                             }

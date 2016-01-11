@@ -1,0 +1,48 @@
+﻿@model System.Collections.Generic.IEnumerable<GUIManagement.VacationEntitlementViewItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Urlaubsanspruch</h2>
+
+
+
+<p>
+   
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeFullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemainingVacationDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VacationDaysPreviousYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VacationDaysTotal)
+        </th>   
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemainingVacationDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VacationDaysPreviousYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VacationDaysTotal)
+            </td>
+        </tr>
+    }
+
+</table>

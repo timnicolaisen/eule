@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.EmployeeID01)
+            @Html.DisplayNameFor(model => model.EmployeeID01_FullName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EmployeeID02)
+            @Html.DisplayNameFor(model => model.EmployeeID02_FullName)
         </th>
         <th></th>
     </tr>
@@ -24,15 +24,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeID01)
+                @Html.DisplayFor(modelItem => item.EmployeeID01_FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeID02)
+                @Html.DisplayFor(modelItem => item.EmployeeID02_FullName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ShiftGroupID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ShiftGroupID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ShiftGroupID })
+                
             </td>
         </tr>
     }

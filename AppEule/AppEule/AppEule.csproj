@@ -196,6 +196,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SendMailerController.cs" />
     <Compile Include="Controllers\ShiftgroupController.cs" />
+    <Compile Include="Controllers\VacationEntitlementController.cs" />
     <Compile Include="Controllers\VacationReplacementRequestsController.cs" />
     <Compile Include="Controllers\VacationRequestsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -338,12 +339,15 @@
     <Content Include="Views\Shiftgroup\Index.cshtml" />
     <Content Include="Views\Shiftgroup\Create.cshtml" />
     <Content Include="Views\Employee\Details.cshtml" />
+    <Content Include="Views\VacationEntitlement\Index.cshtml" />
+    <Content Include="Views\VacationEntitlement\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\base\images\" />
     <Folder Include="Content\themes\base\minified\images\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Calender\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

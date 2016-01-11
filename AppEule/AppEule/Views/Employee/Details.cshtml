@@ -68,7 +68,7 @@
                             @Html.DisplayNameFor(model => model.ShiftGroupPartnerName)
                         </div>
                         <div class="col-md-9">
-                            @Html.DropDownListFor(model => model.ShiftGroupPartnerName, (IEnumerable<SelectListItem>)ViewBag.Employee, "Kein Schichtpartner", new { @class = "form-control dropdown-toggle" })
+                            @Html.DropDownListFor(model => model.ShiftGroupPartnerName, (IEnumerable<SelectListItem>)ViewBag.Employee, Model.ShiftGroupPartnerName, new { @class = "form-control dropdown-toggle" })
                         </div>
                     </div> 
 

@@ -76,7 +76,7 @@ namespace AppEule.Controllers
 
 
         [HttpPost]
-      //  [ValidateAntiForgeryToken]
+        //  [ValidateAntiForgeryToken]
         public ActionResult Details(EmployeeDetailsViewItem EmployeeDetails,  string id, string Roles, string Lastname, string LastName)
         {
             try
@@ -84,8 +84,19 @@ namespace AppEule.Controllers
                 //context.Entry(Roles).State = System.Data.Entity.EntityState.Modified;
                 //context.SaveChanges();
 
+                if(EmployeeDetails.ShiftGroupPartnerName == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                if (_dbq.CheckForShiftgroup(id) == true)
+                {
+                    _dbq.DeleteShiftGroup(id);
+                }
                 ShiftGroup UpdateShiftGroup = new ShiftGroup(EmployeeDetails.ShiftGroupPartnerName, id);
                 _dbq.InsertNewShiftgroup(UpdateShiftGroup);
+
+                EmployeeDetails.UserId = id;
+                _dbq.UpdateEmployeebyDetail(EmployeeDetails);
 
                 return RedirectToAction("Index");
             }

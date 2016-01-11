@@ -638,6 +638,10 @@ namespace DatabaseManagement
                                 ShiftPartnerID = reader.GetString(reader.GetOrdinal("Id"));
                             }
                         }
+                        else
+                        {
+                            ShiftPartnerID = null;
+                        }
                     }
                 }
             }
@@ -931,6 +935,48 @@ namespace DatabaseManagement
             }
         }
 
+        public int SelectShiftGroupId(String EmployeeId)
+        {
+           int ShiftGroupIdtmp = 0;
+
+           using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "SELECT ShiftGroupID FROM dbo.ShiftGroup WHERE EmployeeID01 = @EmployeeId OR EmployeeID02 = @EmployeeId";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeId", EmployeeId);
+
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            // Check if the reader has any rows at all before starting to read.
+                            if (reader.HasRows)
+                            {
+                                // Read advances to the next row.
+                                while (reader.Read())
+                                {
+                                    // Save DB-Return into variables
+
+                                    ShiftGroupIdtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
+                                }
+                            }
+                        }
+                    }
+                    catch (SqlException e)
+                    {
+                        {
+                          
+                        }
+                    }
+                }
+            }
+            return ShiftGroupIdtmp;
+        }
+
+
         public EmployeeDetailsViewItem SelectEmployeebyDetailsById(string id)
         {
             EmployeeDetailsViewItem emp;
@@ -940,10 +986,12 @@ namespace DatabaseManagement
             string LastNametmp = "";
             string Emailtmp = "";
             string RoleName = "";
+            string ShiftGroupPartnerId = "";
             string ShiftGroupPartnerName = "";
             string DivisonName = "";
             int ShiftGroupIDtmp = 0;
             int DivisionIDtmp = 0;
+
 
             using (SqlConnection connection = new SqlConnection(sqlConnectionString))
             {
@@ -976,12 +1024,22 @@ namespace DatabaseManagement
                                     ShiftGroupIDtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
                                 }
 
-
+                              
 
                                 RoleName = SelectRole(id);
-                                ShiftGroupPartnerName = SelectShiftPartner(id);
+                                ShiftGroupPartnerId= SelectShiftPartner(id);
 
+                                if (ShiftGroupPartnerId == null)
+                                {
+                                    ShiftGroupPartnerName = "Keine Schichtgruppe";
+                                }
+                                else
+                                {
+                                    ShiftGroupPartnerName = SelectEmployeeFullName(ShiftGroupPartnerId);
+                                }
+                             
 
+                             
                                 DivisionIDtmp = reader.GetInt32(reader.GetOrdinal("DivisionID"));
                                 emp = new EmployeeDetailsViewItem(Idtmp, Usernametmp, FirstNametmp,
                                     LastNametmp, Emailtmp, RoleName, ShiftGroupPartnerName, "");
@@ -998,6 +1056,142 @@ namespace DatabaseManagement
                 }
             }
         }
+
+
+        public Boolean UpdateEmployeebyDetail(EmployeeDetailsViewItem Emp)
+        {
+
+            int ShiftGroupIdtmp = SelectShiftGroupId(Emp.UserId);
+          
+
+            bool Result = false;
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "UPDATE dbo.AspNetUsers SET UserName = @UserName, FirstName = @FirstName, LastName = @LastName, Email = @EMail, ShiftGroupID = @ShiftGroupId WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("UserName", Emp.UserName);
+                    cmd.Parameters.AddWithValue("FirstName", Emp.FirstName);
+                    cmd.Parameters.AddWithValue("LastName", Emp.LastName);
+                    cmd.Parameters.AddWithValue("Email", Emp.Email);
+                    cmd.Parameters.AddWithValue("ShiftGroupId", ShiftGroupIdtmp);
+                    cmd.Parameters.AddWithValue("Id", Emp.UserId);
+
+                    try
+                    {
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        Result = true;
+                    }
+                    catch (SqlException e)
+                    {
+                        {
+                            Result = false;
+                        }
+                    }
+                }
+            }
+            return Result;
+        }
+
+        public bool ClearShiftGroupInUser(String EmployeeId)
+        {
+            bool Result = false;
+            ShiftGroup Shiftgroup = SelectShiftGroup(EmployeeId);
+
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "UPDATE dbo.AspNetUsers SET ShiftGroupID = NULL WHERE Id = @EmployeeId OR  Id = @ShiftGroupPartnerId";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeId", Shiftgroup.EmployeeID01);
+                    cmd.Parameters.AddWithValue("ShiftGroupPartnerId", Shiftgroup.EmployeeID02);
+
+                    try
+                    {
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        Result = true;
+                    }
+                    catch (SqlException e) //if failure in Database result = false
+                    {
+                        Result = false;
+                    }
+
+                }
+            }
+
+            return Result;
+        }
+
+        public bool UpdateShiftGroupInUser(String EmployeeId)
+        {
+            bool Result = false;
+            ShiftGroup Shiftgroup = SelectShiftGroup(EmployeeId);
+
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "UPDATE dbo.AspNetUsers SET ShiftGroupID = NULL WHERE Id = @EmployeeId OR  Id = @ShiftGroupPartnerId";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeId", Shiftgroup.EmployeeID01);
+                    cmd.Parameters.AddWithValue("ShiftGroupPartnerId", Shiftgroup.EmployeeID02);
+
+                    try
+                    {
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        Result = true;
+                    }
+                    catch (SqlException e) //if failure in Database result = false
+                    {
+                        Result = false;
+                    }
+
+                }
+            }
+
+            return Result;
+        }
+
+
+        public bool DeleteShiftGroup(String EmployeeId)
+        {
+            bool Result = false;
+            ShiftGroup Shiftgroup = SelectShiftGroup(EmployeeId);
+
+            ClearShiftGroupInUser(EmployeeId);
+
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "DELETE FROM ShiftGroup WHERE EmployeeID01 = @EmployeeId OR EmployeeID02 = @EmployeeId";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeId", EmployeeId);
+
+                    try
+                    {
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        Result = true;
+                    }
+                    catch (SqlException e) //if failure in Database result = false
+                    {
+                        Result = false;
+                    }
+
+                }
+            }
+
+           
+            return Result;
+        }
+
+
 
         /// <summary>
         /// selects all VacationRequests for Employee with EmployeeID in one of the states out of the list
@@ -1251,6 +1445,11 @@ namespace DatabaseManagement
             string FullName = "null";
             string FirstNametmp = "null";
             string LastNametmp = "null";
+
+            if(EmployeeID == null)
+            {
+                return null;
+            }
             using (SqlConnection connection = new SqlConnection(sqlConnectionString))
             {
                 string sqlStatement =
@@ -1271,7 +1470,8 @@ namespace DatabaseManagement
                                 FirstNametmp = reader.GetString(reader.GetOrdinal("FirstName"));
                                 LastNametmp = reader.GetString(reader.GetOrdinal("LastName"));
                             }
-                        }
+
+                        }              
                     }
                 }
             }
@@ -1721,6 +1921,50 @@ namespace DatabaseManagement
             return ShiftList;
         }
 
+        public ShiftGroup SelectShiftGroup(String EmployeeId)
+        {
+            string EmployeeID01tmp = "c";
+            string EmployeeID02tmp = "c";
+            int ShiftGroupIDtmp = 0;
+
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "SELECT * FROM dbo.ShiftGroup WHERE EmployeeID01 = @EmployeeId OR EmployeeID02 = @EmployeeId";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeId", EmployeeId);
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        cmd.Parameters.AddWithValue("EmployeeID01", EmployeeId);
+
+                        // Check if the reader has any rows at all before starting to read.
+                        if (reader.HasRows)
+                        {
+                            // Read advances to the next row.
+                            while (reader.Read())
+                            {
+                                // Save DB-Return into variables
+                                // wihout Role and StaffID
+                                EmployeeID01tmp = reader.GetString(reader.GetOrdinal("EmployeeID01"));
+                                EmployeeID02tmp = reader.GetString(reader.GetOrdinal("EmployeeID02"));
+                                ShiftGroupIDtmp = reader.GetInt32(reader.GetOrdinal("ShiftGroupID"));
+
+                                ShiftGroup Shiftgroup = new ShiftGroup(ShiftGroupIDtmp, EmployeeID01tmp, EmployeeID02tmp);
+
+                                return Shiftgroup;
+                            }
+                        }
+
+                    }
+                    return null; 
+                }
+            }
+           
+        }
+
+
 
         public Boolean InsertNewShiftgroup(ShiftGroup Shiftgroup)
         {
@@ -1736,6 +1980,39 @@ namespace DatabaseManagement
 
                     try
                     {
+                       
+                        connection.Open();
+                        cmd.ExecuteNonQuery();//insert/delete/update is nonQuery
+                        UpdateNewShiftgroupInUser(Shiftgroup);
+                        Result = true;
+                    }
+                    catch (SqlException e) //if Failure in Database then Result = false
+                    {
+                        {
+                            Result = false;
+                        }
+                    }
+                }
+            }
+            return Result;
+        }
+
+        public Boolean UpdateNewShiftgroupInUser(ShiftGroup Shiftgroup)
+        {
+            bool Result = false;
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "UPDATE dbo.[AspNetUsers] SET ShiftGroupID = @ShiftgroupId WHERE Id = @EmployeeID01 OR Id = @EmployeeID02";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("ShiftgroupId", SelectShiftGroupId(Shiftgroup.getEmployeeID01()));
+                    cmd.Parameters.AddWithValue("EmployeeID01", Shiftgroup.getEmployeeID01());
+                    cmd.Parameters.AddWithValue("EmployeeID02", Shiftgroup.getEmployeeID02());
+
+                    try
+                    {
+
                         connection.Open();
                         cmd.ExecuteNonQuery();//insert/delete/update is nonQuery
                         Result = true;
@@ -1750,8 +2027,51 @@ namespace DatabaseManagement
             }
             return Result;
         }
-        
 
+
+        public Boolean CheckForShiftgroup(string EmployeeID)
+        {
+            bool Result = false;
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "SELECT * FROM [dbo].[Shiftgroup] WHERE EmployeeID01 = @EmployeeID OR EmployeeID02 =  @EmployeeID";
+
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeID", EmployeeID);
+
+
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            cmd.Parameters.AddWithValue("EmployeeID01", EmployeeID);
+
+                            // Check if the reader has any rows at all before starting to read.
+                            if (reader.HasRows)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+
+                        }
+                    }
+                    catch (SqlException e) //if Failure in Database then Result = false
+                    {
+                        {
+                            Result = false;
+                        }
+                    }
+                
+                }
+            }
+            return Result;
+        }
 
 
 

@@ -253,10 +253,8 @@
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Properties\PublishProfiles\Azure - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\EULE-HTW - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\EULE-HTW - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\Package.pubxml" />
+    <None Include="Properties\PublishProfiles\Package Deploy %28vServer%29.pubxml" />
+    <None Include="Properties\PublishProfiles\Web Deploy %28vServer%29.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -344,6 +342,7 @@
     <Content Include="Views\Shared\EditorTemplates\VacationEntitlementViewItem.cshtml" />
     <Content Include="Views\VacationEntitlement\Edit.cshtml" />
     <Content Include="Views\VacationEntitlement\Create.cshtml" />
+    <Content Include="Views\Employee\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

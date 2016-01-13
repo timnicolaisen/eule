@@ -6,7 +6,7 @@
 
 
 
-@using (Html.BeginForm("Details", "VacationEntitlement", FormMethod.Post, new { id = "formId" }))
+@using (Html.BeginForm("Details", "VacationEntitlement", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
                 <div class="form-group">
                     @Html.LabelFor(model => model.VacationDaysPreviousYear, new { @class = "col-md-2 control-label" })
@@ -23,7 +23,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Abschicken" class="btn btn-default" />
+                        <input type="submit" value="&#220;bernehmen" class="btn btn-primary" />
                     </div>
                 </div>
 }

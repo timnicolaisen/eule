@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using VacationManagement;
 using GUIManagement;
+using System.Threading.Tasks;
 
 namespace AppEule.Controllers
 {
@@ -77,14 +78,16 @@ namespace AppEule.Controllers
 
         [HttpPost]
         //  [ValidateAntiForgeryToken]
-        public ActionResult Details(EmployeeDetailsViewItem EmployeeDetails,  string id, string Roles, string Lastname, string LastName)
+        public ActionResult Details(EmployeeDetailsViewItem EmployeeDetails,  string id, string Lastname, string LastName)
         {
             try
             {
                 //context.Entry(Roles).State = System.Data.Entity.EntityState.Modified;
                 //context.SaveChanges();
 
-                if(EmployeeDetails.ShiftGroupPartnerName == null)
+                _dbq.ChangeRole(id, EmployeeDetails.RoleName);
+
+                if (EmployeeDetails.ShiftGroupPartnerName == null)
                 {
                     return RedirectToAction("Index");
                 }
@@ -94,6 +97,8 @@ namespace AppEule.Controllers
                 }
                 ShiftGroup UpdateShiftGroup = new ShiftGroup(EmployeeDetails.ShiftGroupPartnerName, id);
                 _dbq.InsertNewShiftgroup(UpdateShiftGroup);
+
+                
 
                 EmployeeDetails.UserId = id;
                 _dbq.UpdateEmployeebyDetail(EmployeeDetails);
@@ -106,6 +111,32 @@ namespace AppEule.Controllers
             }
         }
 
+        public ActionResult ResetPassword(String id)
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model, String id)
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+
+            UserStore<ApplicationUser> store = new UserStore<ApplicationUser>(context);
+
+            UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(store);
+
+            String hashedNewPassword = UserManager.PasswordHasher.HashPassword(model.Password);
+
+            ApplicationUser cUser = await store.FindByIdAsync(id);
+
+            await store.SetPasswordHashAsync(cUser, hashedNewPassword);
+            await store.UpdateAsync(cUser);
+
+            return RedirectToAction("Index");
+        }
+
+      
 
         public ActionResult ResetDB()
         {

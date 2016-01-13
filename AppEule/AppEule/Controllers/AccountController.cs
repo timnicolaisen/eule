@@ -13,6 +13,7 @@ using Microsoft.Owin.Security;
 using AppEule.Models;
 using AppEule; 
 using AppEule.Controllers;
+using DatabaseManagement;
 
 
 namespace GUIManagement
@@ -24,6 +25,7 @@ namespace GUIManagement
     [HandleError()]
     public class AccountController : BaseController
     {
+        private DBQuery _dbq = new DBQuery();
         private ApplicationUserManager _userManager;
         private ApplicationDbContext context = new ApplicationDbContext();
         public AccountController()
@@ -170,7 +172,7 @@ namespace GUIManagement
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    _dbq.InsertEntitlementsOfEmployee(user.Id);
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                     // E-Mail-Nachricht mit diesem Link senden
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

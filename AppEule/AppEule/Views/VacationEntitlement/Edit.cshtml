@@ -1,0 +1,72 @@
+﻿@model System.Collections.Generic.IList<GUIManagement.VacationEntitlementViewItem>
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Urlaubsanspruch bearbeiten</h2>
+
+
+<div class="pull-right">
+    @Html.ActionLink("Urlaubsanspruch aendern", "Edit", "VacationEntitlement")
+
+</div>
+<p>
+
+</p>
+@using (Html.BeginForm("Details", "VacationEntitlement", FormMethod.Post))
+
+{
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeFullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingVacationDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VacationDaysPreviousYear)
+            </th>
+            <th>
+                Neuer Urlaubsanspruch @DateTime.Now.Year
+            </th>
+        </tr>
+
+        @
+       @for (int i = 0; i < Model.Count(); i++)
+
+       {
+       @Html.EditorFor(modelItem => Model.EmployeeFullName, new { htmlAttributes = new { @class = "form-control" } })
+       }
+
+
+
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RemainingVacationDays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VacationDaysPreviousYear)
+                </td>
+                <td>
+                    <div class="form-group">
+                        @Html.EditorFor(modelItem => item.VacationEntitlementList, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBox("employees[" + @1 + "].ID",
+                    Model[i].ID, new { @readonly = "readonly" })
+                    </div>
+</td>
+            </tr>
+        }
+
+    </table>
+}

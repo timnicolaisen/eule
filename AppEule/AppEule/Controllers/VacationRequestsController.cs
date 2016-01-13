@@ -228,7 +228,7 @@ namespace GUIManagement
             String shiftPartnerID = dbq.SelectShiftPartner(currentUserId);
             String shiftParterName = "-";
 
-            if (!shiftPartnerID.Equals("null"))
+            if (shiftPartnerID != null)
             {
                 Employee shiftPartner = dbq.SelectDeputy(currentUserId);
                 shiftParterName = dbq.SelectEmployeeFullName(shiftPartner.getEmployeeID());

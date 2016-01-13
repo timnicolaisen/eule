@@ -341,6 +341,9 @@
     <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\VacationEntitlement\Index.cshtml" />
     <Content Include="Views\VacationEntitlement\Details.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\VacationEntitlementViewItem.cshtml" />
+    <Content Include="Views\VacationEntitlement\Edit.cshtml" />
+    <Content Include="Views\VacationEntitlement\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

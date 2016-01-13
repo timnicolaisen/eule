@@ -97,15 +97,10 @@
 
             </div>
             <div class="tab-pane fade" id="entitlement">
-            <form id="tab2">
-                <br />
-                <br />
-                @{ Html.RenderAction("Details", "vacationEntitlement");}
-                
-            </form>
+                @{ Html.RenderAction("Details", "VacationEntitlement", new GUIManagement.VacationEntitlementViewItem()); }
         </div>
             <div class="tab-pane fade" id="password">
-                <form id="tab2">
+            <form id="tab2">
                     @{ Html.RenderAction("SetPassword", "Manage");}
                 </form>
             </div>
@@ -115,12 +110,13 @@
         </div>
     </div>
 
-
+   
 
         @Html.ActionLink("Zurueck zur Mitarbeiterliste", "Index")
 </p>
-    @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    }
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+   
 
 

@@ -15,6 +15,7 @@ namespace GUIManagement
         private int _vacationDaysPreviousYear;
         private int _vacationDaysCurYear;
         const String DisplayNameCurYear = "Urlaubsanspruch 2016";
+        private IEnumerable<VacationEntitlementViewItem> _vacationEntitlementList;
 
 
         public String EmployeeID
@@ -42,7 +43,7 @@ namespace GUIManagement
             set { _vacationDaysCurYear = value; }
         }
 
-        [DisplayName("Urlaubstage gesamt")]
+        [DisplayName(VacationEntitlementViewItem.DisplayNameCurYear)]
         public int VacationDaysTotal
         {
             get { return _vacationDaysTotal; }
@@ -56,10 +57,28 @@ namespace GUIManagement
             set { _vacationDaysPreviousYear = value; }
         }
 
+      
+        public IEnumerable<VacationEntitlementViewItem> VacationEntitlementList
+        {
+            get { return _vacationEntitlementList; }
+            set { _vacationEntitlementList = value; }
+           
+        }
+
         public VacationEntitlementViewItem()
         {
-
+            this.RemainingVacationDays = 0;
+            this.VacationDaysCurYear = 0;
+            this.VacationDaysTotal = 0;
+            this.VacationDaysPreviousYear = 0;
         }
+
+        public VacationEntitlementViewItem(int VacationDaysPreviousYear, int VacationDaysCurYear)
+        {
+            this._vacationDaysCurYear = VacationDaysCurYear;
+            this._vacationDaysPreviousYear = VacationDaysPreviousYear;
+        }
+
 
         public VacationEntitlementViewItem(String EmployeeID, int RemainingVacationDays, int VacationDaysTotal, int VacationDaysPreviousYear)
         {

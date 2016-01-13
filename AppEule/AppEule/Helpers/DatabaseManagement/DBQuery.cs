@@ -1880,6 +1880,9 @@ namespace DatabaseManagement
 
 
 
+
+
+
         public List<VacationEntitlementViewItem> SelectEntitlementsOfDivision()
         {
             String EmployeeID_tmp;
@@ -1929,6 +1932,35 @@ namespace DatabaseManagement
                 }
             }
             return VacationEntitlement;
+        }
+
+        public bool InsertEntitlementsOfEmployee(String EmployeeId)
+        {
+            bool Result = false;
+
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                string sqlStatement =
+                    "INSERT INTO dbo.VacationEntitlement VALUES (0, 0, 0, @EmployeeID)";
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
+                {
+                    cmd.Parameters.AddWithValue("EmployeeID", EmployeeId);
+                    try
+                    {
+                        connection.Open();
+                        cmd.ExecuteNonQuery();//insert/delete/update is nonQuery
+                        Result = true;
+                    }
+                    catch (SqlException e) //if Failure in Database then Result = false
+                    {
+                        {
+                            Result = false;
+                        }
+                    }
+
+                }
+                return Result;
+            }
         }
 
         public VacationEntitlementViewItem SelectEntitlementsOfEmployee(String EmployeeId)
@@ -1983,35 +2015,32 @@ namespace DatabaseManagement
         }
 
 
-        public Boolean UpdateEntitlementOfEmployee(VacationEntitlementViewItem VacationEntitlement)
+        public Boolean UpdateEntitlementOfEmployee(VacationEntitlementViewItem VacationEntitlement, String EmployeeId)
         {
+            int VacationDaysPreviousYear_tmp = SelectVacationDaysPreviousYear(EmployeeId);
+            int VacationDaysTotal_tmp = SelectVacationDaysTotal(EmployeeId);
+            int VacationDayRemaining_tmp = SelectRemainingVacationDays(EmployeeId);
+            int VacationDaysUsed_tmp = VacationDaysPreviousYear_tmp + VacationDaysTotal_tmp - VacationDayRemaining_tmp;
 
-            int VacationDaysTotal_tmp = SelectVacationDaysTotal(VacationEntitlement.EmployeeID);
-            int VacationDayRemaining_tmp = SelectRemainingVacationDays(VacationEntitlement.EmployeeID);
-            
-            int UsedVacationDays = VacationDaysTotal_tmp - VacationDayRemaining_tmp;
-
-
-            VacationDayRemaining_tmp = VacationEntitlement.VacationDaysTotal - UsedVacationDays;
-            
+            int VacationDayRemaining_new = VacationEntitlement.VacationDaysTotal + VacationEntitlement.VacationDaysPreviousYear - VacationDaysUsed_tmp;
 
            
-
+            
             bool Result = false;
             using (SqlConnection connection = new SqlConnection(sqlConnectionString))
             {
                 string sqlStatement =
-                    " UPDATE dbo.VacationEntitlement SET VacationDaysPreviousYear = @VacationDaysPreviousYear, VacationDaysTotal = @VacationDaysTotal, VacationDayRemaining = @VacationDaysRemaining WHERE Id = @EmployeeId";
+                    " UPDATE dbo.VacationEntitlement SET VacationDaysPreviousYear = @VacationDaysPreviousYear, VacationDaysTotal = @VacationDaysTotal, VacationDayRemaining = @VacationDaysRemaining WHERE EmployeeID = @EmployeeId";
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, connection))
                 {
 
                 
 
                     cmd.Parameters.AddWithValue("VacationDaysPreviousYear", VacationEntitlement.VacationDaysPreviousYear);
-                    cmd.Parameters.AddWithValue("VacationDaysTotal", VacationEntitlement.VacationDaysPreviousYear + VacationEntitlement.VacationDaysCurYear);
-                    cmd.Parameters.AddWithValue("VacationDaysRemaining", VacationDayRemaining_tmp);
-                    cmd.Parameters.AddWithValue("EmployeeId", VacationEntitlement.EmployeeID);
-                    cmd.Parameters.AddWithValue("VacationDaysCurYear", VacationEntitlement.VacationDaysCurYear);
+                    cmd.Parameters.AddWithValue("VacationDaysTotal", VacationEntitlement.VacationDaysTotal);
+                    cmd.Parameters.AddWithValue("VacationDaysRemaining", VacationDayRemaining_new);
+                    cmd.Parameters.AddWithValue("EmployeeId", EmployeeId);
+        
 
                     try
                     {

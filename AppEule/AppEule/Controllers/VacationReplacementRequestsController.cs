@@ -28,7 +28,7 @@ namespace GUIManagement
             
             String shiftPartnerID = dbq.SelectShiftPartner(currentUserId);
            
-            if (!shiftPartnerID.Equals("null"))
+            if (shiftPartnerID != null)
             {
                 var VRList = dbq.SelectSubmittedVacationRequestsOfShiftPartner(shiftPartnerID);
                 String name = dbq.SelectEmployeeFullName(shiftPartnerID);

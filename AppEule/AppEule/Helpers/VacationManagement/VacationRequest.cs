@@ -185,6 +185,8 @@ namespace VacationManagement
             this._netVacationDays = 0;
         }
 
+
+
         /// <summary>
         /// constructor to create a vacation request 
         /// </summary>

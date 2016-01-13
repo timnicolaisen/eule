@@ -41,10 +41,10 @@ namespace AppEule.Controllers
         }
 
         [HttpPost]
-        public ActionResult Details(VacationEntitlementViewItem VacationEntitlement, string id)
+        public ActionResult Details(GUIManagement.VacationEntitlementViewItem VacationEntitlement, String id)
         {
 
-            _dbq.UpdateEntitlementOfEmployee(VacationEntitlement);
+            _dbq.UpdateEntitlementOfEmployee(VacationEntitlement, id);
 
             return RedirectToAction("Index");
         }
@@ -57,11 +57,11 @@ namespace AppEule.Controllers
 
         // POST: VacationEntitlement/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(GUIManagement.VacationEntitlementViewItem VacationEntitlement, String id)
         {
             try
             {
-                // TODO: Add insert logic here
+                _dbq.UpdateEntitlementOfEmployee(VacationEntitlement, id);
 
                 return RedirectToAction("Index");
             }
@@ -72,9 +72,11 @@ namespace AppEule.Controllers
         }
 
         // GET: VacationEntitlement/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
-            return View();
+            string currentId = User.Identity.GetUserId();
+            List<VacationEntitlementViewItem> resultList = _dbq.SelectEntitlementsOfDivision();
+            return View(resultList);
         }
 
         // POST: VacationEntitlement/Edit/5

@@ -22,7 +22,7 @@ namespace AppEule.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "Bereichsleiter")]
+        [Authorize(Roles = "Bereichsleiter , Administrator")]
         public ActionResult Index()
         {
             //return View(GetPendingRequests());

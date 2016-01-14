@@ -198,7 +198,7 @@ namespace AppEule.Controllers
                         int remainingVacationDays = dbq.SelectRemainingVacationDays(e.getEmployeeID());
                         String deputyID = dbq.SelectShiftPartner(e.getEmployeeID());
                         String deputyName = "-";
-                        if (!deputyID.Equals("null"))
+                        if (deputyID != null)
                         {
                             deputyName = dbq.SelectEmployeeFullName(deputyID);
                         }

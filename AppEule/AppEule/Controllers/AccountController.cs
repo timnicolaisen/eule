@@ -173,6 +173,7 @@ namespace GUIManagement
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     _dbq.InsertEntitlementsOfEmployee(user.Id);
+                    _dbq.SetRole(user.Id, "Mitarbeiter");
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                     // E-Mail-Nachricht mit diesem Link senden
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
